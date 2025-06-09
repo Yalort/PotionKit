@@ -65,6 +65,19 @@ namespace PotionApp
             }
         }
 
+        private void listQueue_DoubleClick(object sender, EventArgs e)
+        {
+            if (listQueue.SelectedItem is not Recipe rec) return;
+            var items = brewQueue.ToList();
+            if (items.Remove(rec))
+            {
+                brewQueue.Clear();
+                foreach (var r in items)
+                    brewQueue.Enqueue(r);
+                RefreshQueue();
+            }
+        }
+
         private void btnBrew_Click(object sender, EventArgs e)
         {
             if (brewQueue.Count == 0) return;
@@ -142,12 +155,14 @@ namespace PotionApp
             else
                 waterAmount = Math.Max(0, waterAmount - delta);
             UpdateWaterUI();
+            RefreshTotals();
         }
 
         private void btnFillWater_Click(object sender, EventArgs e)
         {
             waterAmount = 1000;
             UpdateWaterUI();
+            RefreshTotals();
         }
 
         private void listInventory_DoubleClick(object sender, EventArgs e)
