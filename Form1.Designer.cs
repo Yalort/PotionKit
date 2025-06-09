@@ -294,7 +294,7 @@ namespace PotionApp
             // barWater
             //
             barWater.Location = new System.Drawing.Point(1050, 24);
-            barWater.Maximum = 1000000000;
+            barWater.Maximum = int.MaxValue;
             barWater.Name = "barWater";
             barWater.Size = new System.Drawing.Size(15, 415);
             barWater.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
@@ -311,7 +311,7 @@ namespace PotionApp
             // numWaterAdjust
             //
             numWaterAdjust.Location = new System.Drawing.Point(1069, 126);
-            numWaterAdjust.Maximum = 1000000000000;
+            numWaterAdjust.Maximum = decimal.MaxValue;
             numWaterAdjust.Minimum = 1;
             numWaterAdjust.Name = "numWaterAdjust";
             numWaterAdjust.Size = new System.Drawing.Size(60, 23);

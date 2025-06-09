@@ -66,7 +66,7 @@ namespace PotionApp
 
                 nums[i].Location = new System.Drawing.Point(80, top + i * 30 - 3);
                 nums[i].Name = "num" + labels[i];
-                nums[i].Maximum = 1000;
+                nums[i].Maximum = decimal.MaxValue;
                 Controls.Add(nums[i]);
             }
 
