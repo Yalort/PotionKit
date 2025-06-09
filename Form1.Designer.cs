@@ -10,7 +10,7 @@ namespace PotionApp
         private System.Windows.Forms.TabPage tabHelp;
         private System.Windows.Forms.ListBox listRecipes;
         private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.ComboBox comboRecipes;
+        private System.Windows.Forms.ListBox listBrewRecipes;
         private System.Windows.Forms.Button btnAddQueue;
         private System.Windows.Forms.ListBox listQueue;
         private System.Windows.Forms.Button btnBrew;
@@ -66,7 +66,7 @@ namespace PotionApp
             btnAdd = new System.Windows.Forms.Button();
             btnAddQueue = new System.Windows.Forms.Button();
             btnBrew = new System.Windows.Forms.Button();
-            comboRecipes = new System.Windows.Forms.ComboBox();
+            listBrewRecipes = new System.Windows.Forms.ListBox();
             numAnimal = new System.Windows.Forms.NumericUpDown();
             numBerry = new System.Windows.Forms.NumericUpDown();
             numFungi = new System.Windows.Forms.NumericUpDown();
@@ -117,7 +117,7 @@ namespace PotionApp
             tabControl1.Location = new System.Drawing.Point(0, 0);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 1;
-            tabControl1.Size = new System.Drawing.Size(780, 476);
+            tabControl1.Size = new System.Drawing.Size(1404, 476);
             //
             // tabRecipes
             //
@@ -127,7 +127,7 @@ namespace PotionApp
             tabRecipes.Location = new System.Drawing.Point(4, 24);
             tabRecipes.Name = "tabRecipes";
             tabRecipes.Padding = new System.Windows.Forms.Padding(3);
-            tabRecipes.Size = new System.Drawing.Size(772, 448);
+            tabRecipes.Size = new System.Drawing.Size(1396, 448);
             tabRecipes.Text = "Recipes";
             tabRecipes.UseVisualStyleBackColor = true;
             //
@@ -161,7 +161,7 @@ namespace PotionApp
             //
             // tabBrew
             //
-            tabBrew.Controls.Add(comboRecipes);
+            tabBrew.Controls.Add(listBrewRecipes);
             tabBrew.Controls.Add(btnAddQueue);
             tabBrew.Controls.Add(lblQueueColumns);
             tabBrew.Controls.Add(listQueue);
@@ -188,20 +188,23 @@ namespace PotionApp
             tabBrew.Location = new System.Drawing.Point(4, 24);
             tabBrew.Name = "tabBrew";
             tabBrew.Padding = new System.Windows.Forms.Padding(3);
-            tabBrew.Size = new System.Drawing.Size(772, 448);
+            tabBrew.Size = new System.Drawing.Size(1396, 448);
             tabBrew.Text = "Brewing";
             tabBrew.UseVisualStyleBackColor = true;
             //
-            // comboRecipes
+            // listBrewRecipes
             //
-            comboRecipes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            comboRecipes.Location = new System.Drawing.Point(6, 130);
-            comboRecipes.Name = "comboRecipes";
-            comboRecipes.Size = new System.Drawing.Size(200, 23);
+            listBrewRecipes.FormattingEnabled = true;
+            listBrewRecipes.ItemHeight = 15;
+            listBrewRecipes.Location = new System.Drawing.Point(6, 6);
+            listBrewRecipes.Name = "listBrewRecipes";
+            listBrewRecipes.Size = new System.Drawing.Size(400, 169);
+            listBrewRecipes.Font = new System.Drawing.Font("Consolas", 9F);
+            listBrewRecipes.DoubleClick += listBrewRecipes_DoubleClick;
             //
             // btnAddQueue
             //
-            btnAddQueue.Location = new System.Drawing.Point(212, 130);
+            btnAddQueue.Location = new System.Drawing.Point(832, 130);
             btnAddQueue.Name = "btnAddQueue";
             btnAddQueue.Size = new System.Drawing.Size(75, 23);
             btnAddQueue.Text = "Add";
@@ -212,7 +215,7 @@ namespace PotionApp
             //
             listQueue.FormattingEnabled = true;
             listQueue.ItemHeight = 15;
-            listQueue.Location = new System.Drawing.Point(6, 199);
+            listQueue.Location = new System.Drawing.Point(626, 199);
             listQueue.Name = "listQueue";
             listQueue.Size = new System.Drawing.Size(480, 243);
             listQueue.Font = new System.Drawing.Font("Consolas", 9F);
@@ -221,7 +224,7 @@ namespace PotionApp
             // lblQueueColumns
             //
             lblQueueColumns.AutoSize = true;
-            lblQueueColumns.Location = new System.Drawing.Point(6, 180);
+            lblQueueColumns.Location = new System.Drawing.Point(626, 180);
             lblQueueColumns.Name = "lblQueueColumns";
             lblQueueColumns.Size = new System.Drawing.Size(0, 15);
             lblQueueColumns.TabIndex = 9;
@@ -229,7 +232,7 @@ namespace PotionApp
             //
             // btnBrew
             //
-            btnBrew.Location = new System.Drawing.Point(492, 199);
+            btnBrew.Location = new System.Drawing.Point(1112, 199);
             btnBrew.Name = "btnBrew";
             btnBrew.Size = new System.Drawing.Size(75, 23);
             btnBrew.Text = "Brew All";
@@ -238,7 +241,7 @@ namespace PotionApp
             //
             // rtbTotals
             //
-            rtbTotals.Location = new System.Drawing.Point(492, 228);
+            rtbTotals.Location = new System.Drawing.Point(1112, 228);
             rtbTotals.Name = "rtbTotals";
             rtbTotals.ReadOnly = true;
             rtbTotals.Size = new System.Drawing.Size(150, 214);
@@ -248,14 +251,14 @@ namespace PotionApp
             // lblWater
             //
             lblWater.AutoSize = true;
-            lblWater.Location = new System.Drawing.Point(640, 6);
+            lblWater.Location = new System.Drawing.Point(1260, 6);
             lblWater.Name = "lblWater";
             lblWater.Size = new System.Drawing.Size(45, 15);
             lblWater.Text = "Water";
             //
             // barWater
             //
-            barWater.Location = new System.Drawing.Point(640, 24);
+            barWater.Location = new System.Drawing.Point(1260, 24);
             barWater.Maximum = 1000;
             barWater.Name = "barWater";
             barWater.Size = new System.Drawing.Size(23, 150);
@@ -265,14 +268,14 @@ namespace PotionApp
             // lblWaterAdjust
             //
             lblWaterAdjust.AutoSize = true;
-            lblWaterAdjust.Location = new System.Drawing.Point(669, 108);
+            lblWaterAdjust.Location = new System.Drawing.Point(1289, 108);
             lblWaterAdjust.Name = "lblWaterAdjust";
             lblWaterAdjust.Size = new System.Drawing.Size(47, 15);
             lblWaterAdjust.Text = "Amount";
             //
             // numWaterAdjust
             //
-            numWaterAdjust.Location = new System.Drawing.Point(669, 126);
+            numWaterAdjust.Location = new System.Drawing.Point(1289, 126);
             numWaterAdjust.Maximum = 1000;
             numWaterAdjust.Minimum = 1;
             numWaterAdjust.Name = "numWaterAdjust";
@@ -281,7 +284,7 @@ namespace PotionApp
             //
             // btnWaterPlus
             //
-            btnWaterPlus.Location = new System.Drawing.Point(669, 24);
+            btnWaterPlus.Location = new System.Drawing.Point(1289, 24);
             btnWaterPlus.Name = "btnWaterPlus";
             btnWaterPlus.Size = new System.Drawing.Size(23, 23);
             btnWaterPlus.Text = "+";
@@ -290,7 +293,7 @@ namespace PotionApp
             //
             // btnWaterMinus
             //
-            btnWaterMinus.Location = new System.Drawing.Point(669, 53);
+            btnWaterMinus.Location = new System.Drawing.Point(1289, 53);
             btnWaterMinus.Name = "btnWaterMinus";
             btnWaterMinus.Size = new System.Drawing.Size(23, 23);
             btnWaterMinus.Text = "-";
@@ -299,7 +302,7 @@ namespace PotionApp
             //
             // btnFillWater
             //
-            btnFillWater.Location = new System.Drawing.Point(669, 82);
+            btnFillWater.Location = new System.Drawing.Point(1289, 82);
             btnFillWater.Name = "btnFillWater";
             btnFillWater.Size = new System.Drawing.Size(92, 23);
             btnFillWater.Text = "Fill";
@@ -308,7 +311,7 @@ namespace PotionApp
             //
             // btnWaterAmountPlus
             //
-            btnWaterAmountPlus.Location = new System.Drawing.Point(698, 24);
+            btnWaterAmountPlus.Location = new System.Drawing.Point(1318, 24);
             btnWaterAmountPlus.Name = "btnWaterAmountPlus";
             btnWaterAmountPlus.Size = new System.Drawing.Size(23, 23);
             btnWaterAmountPlus.Text = "+";
@@ -317,7 +320,7 @@ namespace PotionApp
             //
             // btnWaterAmountMinus
             //
-            btnWaterAmountMinus.Location = new System.Drawing.Point(698, 53);
+            btnWaterAmountMinus.Location = new System.Drawing.Point(1318, 53);
             btnWaterAmountMinus.Name = "btnWaterAmountMinus";
             btnWaterAmountMinus.Size = new System.Drawing.Size(23, 23);
             btnWaterAmountMinus.Text = "-";
@@ -333,7 +336,7 @@ namespace PotionApp
             tabInventory.Location = new System.Drawing.Point(4, 24);
             tabInventory.Name = "tabInventory";
             tabInventory.Padding = new System.Windows.Forms.Padding(3);
-            tabInventory.Size = new System.Drawing.Size(772, 448);
+            tabInventory.Size = new System.Drawing.Size(1396, 448);
             tabInventory.Text = "Inventory";
             tabInventory.UseVisualStyleBackColor = true;
             //
@@ -378,7 +381,7 @@ namespace PotionApp
             tabHelp.Location = new System.Drawing.Point(4, 24);
             tabHelp.Name = "tabHelp";
             tabHelp.Padding = new System.Windows.Forms.Padding(3);
-            tabHelp.Size = new System.Drawing.Size(772, 448);
+            tabHelp.Size = new System.Drawing.Size(1396, 448);
             tabHelp.Text = "Help";
             tabHelp.UseVisualStyleBackColor = true;
             //
@@ -390,22 +393,22 @@ namespace PotionApp
             txtHelp.Name = "txtHelp";
             txtHelp.ReadOnly = true;
             txtHelp.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            txtHelp.Size = new System.Drawing.Size(766, 363);
-            txtHelp.Text = "Controls:\r\n\r\nRecipes tab:\r\n - Add new recipes with the Add button.\r\n - Double-click a recipe to edit it.\r\n - Right-click a recipe for edit or delete.\r\n\r\nBrewing tab:\r\n - Choose a recipe and press Add to queue.\r\n - Double-click a queued item to remove it.\r\n - Brew All consumes ingredients and bottles.\r\n - Use the + and - buttons to adjust ingredient or water amounts. Hold Shift for \u00b15, Ctrl for \u00b110, and both for \u00b1100.\r\n\r\nInventory tab:\r\n - Enter a name and count then click Add.\r\n - Double-click an item to consume one.\r\n - Right-click an item to create a recipe with that name.\r\n Unknown potions show in orange.";
-            txtHelp.Size = new System.Drawing.Size(766, 327);
-            txtHelp.Text = "Controls:\r\n\r\nRecipes tab:\r\n - Add new recipes with the Add button.\r\n - Double-click a recipe to edit it.\r\n - Right-click a recipe for edit or delete.\r\n\r\nBrewing tab:\r\n - Choose a recipe and press Add to queue.\r\n - Double-click a queued item to remove it.\r\n - Brew All consumes ingredients and bottles.\r\n - Use the + and - buttons to adjust ingredient or water amounts. Hold Shift for \u00b15, Ctrl for \u00b110, and both for \u00b1100. Set the water amount box to choose the adjustment size.\r\n\r\nInventory tab:\r\n - Enter a name and count then click Add.\r\n - Double-click an item to consume one.\r\n - Right-click an item to create a recipe with that name.\r\n Unknown potions show in orange.";
-            txtHelp.Size = new System.Drawing.Size(766, 442);
-            txtHelp.Text = "Controls:\r\n\r\nRecipes tab:\r\n - Add new recipes with the Add button.\r\n - Double-click a recipe to edit it.\r\n\r\nBrewing tab:\r\n - Choose a recipe and press Add to queue.\r\n - Double-click a queued item to remove it.\r\n - Brew All consumes ingredients and bottles.\r\n - Use the + and - buttons to adjust ingredient or water amounts. Hold Shift for \u00b15, Ctrl for \u00b110, and both for \u00b1100.\r\n\r\nInventory tab:\r\n - Enter a name and count then click Add.\r\n - Double-click an item to consume one.\r\n - Right-click an item to create a recipe with that name.\r\n Unknown potions show in orange.";
-            txtHelp.Size = new System.Drawing.Size(766, 406);
-            txtHelp.Text = "Controls:\r\n\r\nRecipes tab:\r\n - Add new recipes with the Add button.\r\n - Double-click a recipe to edit it.\r\n\r\nBrewing tab:\r\n - Choose a recipe and press Add to queue.\r\n - Double-click a queued item to remove it.\r\n - Brew All consumes ingredients and bottles.\r\n - Use the + and - buttons to adjust ingredient or water amounts. Hold Shift for \u00b15, Ctrl for \u00b110, and both for \u00b1100. Set the water amount box to choose the adjustment size.\r\n\r\nInventory tab:\r\n - Enter a name and count then click Add.\r\n - Double-click an item to consume one.\r\n - Right-click an item to create a recipe with that name.\r\n Unknown potions show in orange.";
-            txtHelp.Size = new System.Drawing.Size(766, 327);
-            txtHelp.Text = "Controls:\r\n\r\nRecipes tab:\r\n - Add new recipes with the Add button.\r\n - Double-click a recipe to edit it.\r\n\r\nBrewing tab:\r\n - Choose a recipe and press Add to queue.\r\n - Double-click a queued item to remove it.\r\n - Brew All consumes ingredients and bottles.\r\n - Use the + and - buttons next to the water bar to change the current water.\r\n - Use the + and - by the Amount box to change water capacity. Hold Shift for \u00b15, Ctrl for \u00b110, and both for \u00b1100. Set the water amount box to choose the capacity adjustment size.\r\n\r\nInventory tab:\r\n - Enter a name and count then click Add.\r\n - Double-click an item to consume one.\r\n - Right-click an item to create a recipe with that name.\r\n Unknown potions show in orange.";
+            txtHelp.Size = new System.Drawing.Size(1390, 363);
+            txtHelp.Text = "Controls:\r\n\r\nRecipes tab:\r\n - Add new recipes with the Add button.\r\n - Double-click a recipe to edit it.\r\n - Right-click a recipe for edit or delete.\r\n\r\nBrewing tab:\r\n - Double-click a recipe to add it to the queue or use the Add button.\r\n - Double-click a queued item to remove it.\r\n - Brew All consumes ingredients and bottles.\r\n - Use the + and - buttons to adjust ingredient or water amounts. Hold Shift for \u00b15, Ctrl for \u00b110, and both for \u00b1100.\r\n\r\nInventory tab:\r\n - Enter a name and count then click Add.\r\n - Double-click an item to consume one.\r\n - Right-click an item to create a recipe with that name.\r\n Unknown potions show in orange.";
+            txtHelp.Size = new System.Drawing.Size(1390, 327);
+            txtHelp.Text = "Controls:\r\n\r\nRecipes tab:\r\n - Add new recipes with the Add button.\r\n - Double-click a recipe to edit it.\r\n - Right-click a recipe for edit or delete.\r\n\r\nBrewing tab:\r\n - Double-click a recipe to add it to the queue or use the Add button.\r\n - Double-click a queued item to remove it.\r\n - Brew All consumes ingredients and bottles.\r\n - Use the + and - buttons to adjust ingredient or water amounts. Hold Shift for \u00b15, Ctrl for \u00b110, and both for \u00b1100. Set the water amount box to choose the adjustment size.\r\n\r\nInventory tab:\r\n - Enter a name and count then click Add.\r\n - Double-click an item to consume one.\r\n - Right-click an item to create a recipe with that name.\r\n Unknown potions show in orange.";
+            txtHelp.Size = new System.Drawing.Size(1390, 442);
+            txtHelp.Text = "Controls:\r\n\r\nRecipes tab:\r\n - Add new recipes with the Add button.\r\n - Double-click a recipe to edit it.\r\n\r\nBrewing tab:\r\n - Double-click a recipe to add it to the queue or use the Add button.\r\n - Double-click a queued item to remove it.\r\n - Brew All consumes ingredients and bottles.\r\n - Use the + and - buttons to adjust ingredient or water amounts. Hold Shift for \u00b15, Ctrl for \u00b110, and both for \u00b1100.\r\n\r\nInventory tab:\r\n - Enter a name and count then click Add.\r\n - Double-click an item to consume one.\r\n - Right-click an item to create a recipe with that name.\r\n Unknown potions show in orange.";
+            txtHelp.Size = new System.Drawing.Size(1390, 406);
+            txtHelp.Text = "Controls:\r\n\r\nRecipes tab:\r\n - Add new recipes with the Add button.\r\n - Double-click a recipe to edit it.\r\n\r\nBrewing tab:\r\n - Double-click a recipe to add it to the queue or use the Add button.\r\n - Double-click a queued item to remove it.\r\n - Brew All consumes ingredients and bottles.\r\n - Use the + and - buttons to adjust ingredient or water amounts. Hold Shift for \u00b15, Ctrl for \u00b110, and both for \u00b1100. Set the water amount box to choose the adjustment size.\r\n\r\nInventory tab:\r\n - Enter a name and count then click Add.\r\n - Double-click an item to consume one.\r\n - Right-click an item to create a recipe with that name.\r\n Unknown potions show in orange.";
+            txtHelp.Size = new System.Drawing.Size(1390, 327);
+            txtHelp.Text = "Controls:\r\n\r\nRecipes tab:\r\n - Add new recipes with the Add button.\r\n - Double-click a recipe to edit it.\r\n\r\nBrewing tab:\r\n - Double-click a recipe to add it to the queue or use the Add button.\r\n - Double-click a queued item to remove it.\r\n - Brew All consumes ingredients and bottles.\r\n - Use the + and - buttons next to the water bar to change the current water.\r\n - Use the + and - by the Amount box to change water capacity. Hold Shift for \u00b15, Ctrl for \u00b110, and both for \u00b1100. Set the water amount box to choose the capacity adjustment size.\r\n\r\nInventory tab:\r\n - Enter a name and count then click Add.\r\n - Double-click an item to consume one.\r\n - Right-click an item to create a recipe with that name.\r\n Unknown potions show in orange.";
             //
             // Form1
             //
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(780, 476);
+            ClientSize = new System.Drawing.Size(1404, 476);
             Controls.Add(tabControl1);
             Name = "Form1";
             Text = "Potion Manager";
