@@ -156,10 +156,10 @@ namespace PotionApp
         {
             bool shift = ModifierKeys.HasFlag(Keys.Shift);
             bool ctrl = ModifierKeys.HasFlag(Keys.Control);
-            int delta = 1;
-            if (shift && ctrl) delta = 100;
-            else if (ctrl) delta = 10;
-            else if (shift) delta = 5;
+            int delta = (int)numWaterAdjust.Value;
+            if (shift && ctrl) delta *= 100;
+            else if (ctrl) delta *= 10;
+            else if (shift) delta *= 5;
             if (sender is Button btn && btn == btnWaterPlus)
                 waterAmount = Math.Min(1000, waterAmount + delta);
             else
