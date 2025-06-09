@@ -13,5 +13,5 @@ PotionApp is a simple Windows Forms application for managing potion recipes and 
 - Column headers now label each ingredient in the recipe and queue lists.
 - Special ingredients are summarized in the totals panel.
 - Help tab explains the controls.
-- Custom field lets you set how much the water level changes when using the + or - buttons.
+- Custom field lets you adjust the water storage capacity when using the + or - buttons next to it. Separate water buttons control the current water level.
 
