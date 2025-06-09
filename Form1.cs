@@ -33,6 +33,9 @@ namespace PotionApp
         {
             InitializeComponent();
             inventoryMenu.Items.Add("Add Recipe", null, inventoryAddRecipe_Click);
+            inventoryMenu.Items.Add("Edit Count", null, inventoryEditCount_Click);
+            inventoryMenu.Items.Add("Rename", null, inventoryRename_Click);
+            inventoryMenu.Items.Add("Add To Queue", null, inventoryAddQueue_Click);
             listInventory.ContextMenuStrip = inventoryMenu;
             listInventory.MouseDown += listInventory_MouseDown;
 
@@ -274,6 +277,59 @@ namespace PotionApp
             {
                 recipes.Add(frm.Recipe);
                 RefreshRecipes();
+            }
+        }
+
+        private void inventoryEditCount_Click(object? sender, EventArgs e)
+        {
+            if (listInventory.SelectedItem is not string item) return;
+            var name = item.Split(":")[0].Trim();
+            if (!inventory.TryGetValue(name, out int count)) return;
+            var input = SimplePrompt.ShowDialog("Enter new amount:", "Edit Count", count.ToString());
+            if (input == null) return;
+            if (int.TryParse(input, out int newCount) && newCount >= 0)
+            {
+                if (newCount == 0)
+                    inventory.Remove(name);
+                else
+                    inventory[name] = newCount;
+                RefreshInventory();
+            }
+            else
+            {
+                MessageBox.Show("Invalid number", "Edit Count", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void inventoryRename_Click(object? sender, EventArgs e)
+        {
+            if (listInventory.SelectedItem is not string item) return;
+            var name = item.Split(":")[0].Trim();
+            var input = SimplePrompt.ShowDialog("Enter new name:", "Rename Potion", name);
+            if (input == null) return;
+            var newName = input.Trim();
+            if (newName.Length == 0 || newName.Equals(name, StringComparison.OrdinalIgnoreCase)) return;
+            if (!inventory.TryGetValue(name, out int count)) return;
+            inventory.Remove(name);
+            if (!inventory.ContainsKey(newName))
+                inventory[newName] = 0;
+            inventory[newName] += count;
+            RefreshInventory();
+        }
+
+        private void inventoryAddQueue_Click(object? sender, EventArgs e)
+        {
+            if (listInventory.SelectedItem is not string item) return;
+            var name = item.Split(":")[0].Trim();
+            var rec = recipes.FirstOrDefault(r => r.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            if (rec != null)
+            {
+                brewQueue.Enqueue(rec);
+                RefreshQueue();
+            }
+            else
+            {
+                MessageBox.Show($"No recipe found for {name}", "Add To Queue", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
