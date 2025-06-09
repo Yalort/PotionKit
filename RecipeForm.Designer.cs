@@ -14,6 +14,7 @@ namespace PotionApp
         private NumericUpDown numMineral;
         private NumericUpDown numRoot;
         private NumericUpDown numSolution;
+        private TextBox txtSpecial;
         private Button btnOk;
         private Button btnCancel;
 
@@ -37,6 +38,7 @@ namespace PotionApp
             numMineral = new NumericUpDown();
             numRoot = new NumericUpDown();
             numSolution = new NumericUpDown();
+            txtSpecial = new TextBox();
             btnOk = new Button();
             btnCancel = new Button();
             SuspendLayout();
@@ -49,6 +51,14 @@ namespace PotionApp
             txtName.TabIndex = 0;
             txtName.PlaceholderText = "Recipe Name";
             //
+            // txtSpecial
+            //
+            txtSpecial.Location = new System.Drawing.Point(12, 41);
+            txtSpecial.Name = "txtSpecial";
+            txtSpecial.Size = new System.Drawing.Size(200, 23);
+            txtSpecial.TabIndex = 1;
+            txtSpecial.PlaceholderText = "Special (comma separated)";
+            //
             // numeric controls are configured in code
             //
             // btnOk
@@ -56,7 +66,7 @@ namespace PotionApp
             btnOk.Location = new System.Drawing.Point(56, 290);
             btnOk.Name = "btnOk";
             btnOk.Size = new System.Drawing.Size(75, 23);
-            btnOk.TabIndex = 1;
+            btnOk.TabIndex = 2;
             btnOk.Text = "OK";
             btnOk.UseVisualStyleBackColor = true;
             btnOk.Click += btnOk_Click;
@@ -67,7 +77,7 @@ namespace PotionApp
             btnCancel.Location = new System.Drawing.Point(137, 290);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new System.Drawing.Size(75, 23);
-            btnCancel.TabIndex = 2;
+            btnCancel.TabIndex = 3;
             btnCancel.Text = "Cancel";
             btnCancel.UseVisualStyleBackColor = true;
             //
@@ -75,8 +85,9 @@ namespace PotionApp
             //
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(224, 330);
+            ClientSize = new System.Drawing.Size(224, 360);
             Controls.Add(txtName);
+            Controls.Add(txtSpecial);
             Controls.Add(btnOk);
             Controls.Add(btnCancel);
             FormBorderStyle = FormBorderStyle.FixedDialog;
