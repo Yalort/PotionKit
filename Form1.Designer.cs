@@ -68,6 +68,8 @@ namespace PotionApp
             btnAdd = new System.Windows.Forms.Button();
             btnAddQueue = new System.Windows.Forms.Button();
             btnBrew = new System.Windows.Forms.Button();
+            cmbRecipeFilter = new System.Windows.Forms.ComboBox();
+            cmbInventoryFilter = new System.Windows.Forms.ComboBox();
             listBrewRecipes = new System.Windows.Forms.ListBox();
             numAnimal = new System.Windows.Forms.NumericUpDown();
             numBerry = new System.Windows.Forms.NumericUpDown();
