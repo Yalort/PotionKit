@@ -5,16 +5,23 @@ namespace PotionApp
         private System.ComponentModel.IContainer components = null;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabRecipes;
-        private System.Windows.Forms.TabPage tabQueue;
+        private System.Windows.Forms.TabPage tabBrew;
         private System.Windows.Forms.TabPage tabInventory;
         private System.Windows.Forms.ListBox listRecipes;
-        private System.Windows.Forms.ListBox listQueue;
-        private System.Windows.Forms.ListBox listInventory;
         private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.Button btnEdit;
-        private System.Windows.Forms.Button btnRemove;
-        private System.Windows.Forms.Button btnQueue;
+        private System.Windows.Forms.ComboBox comboRecipes;
+        private System.Windows.Forms.Button btnAddQueue;
+        private System.Windows.Forms.ListBox listQueue;
         private System.Windows.Forms.Button btnBrew;
+        private System.Windows.Forms.ListBox listInventory;
+        private System.Windows.Forms.NumericUpDown numAnimal;
+        private System.Windows.Forms.NumericUpDown numBerry;
+        private System.Windows.Forms.NumericUpDown numFungi;
+        private System.Windows.Forms.NumericUpDown numHerb;
+        private System.Windows.Forms.NumericUpDown numMagic;
+        private System.Windows.Forms.NumericUpDown numMineral;
+        private System.Windows.Forms.NumericUpDown numRoot;
+        private System.Windows.Forms.NumericUpDown numSolution;
 
         protected override void Dispose(bool disposing)
         {
@@ -29,26 +36,41 @@ namespace PotionApp
         {
             tabControl1 = new System.Windows.Forms.TabControl();
             tabRecipes = new System.Windows.Forms.TabPage();
-            tabQueue = new System.Windows.Forms.TabPage();
+            tabBrew = new System.Windows.Forms.TabPage();
             tabInventory = new System.Windows.Forms.TabPage();
             listRecipes = new System.Windows.Forms.ListBox();
             listQueue = new System.Windows.Forms.ListBox();
             listInventory = new System.Windows.Forms.ListBox();
             btnAdd = new System.Windows.Forms.Button();
-            btnEdit = new System.Windows.Forms.Button();
-            btnRemove = new System.Windows.Forms.Button();
-            btnQueue = new System.Windows.Forms.Button();
+            btnAddQueue = new System.Windows.Forms.Button();
             btnBrew = new System.Windows.Forms.Button();
+            comboRecipes = new System.Windows.Forms.ComboBox();
+            numAnimal = new System.Windows.Forms.NumericUpDown();
+            numBerry = new System.Windows.Forms.NumericUpDown();
+            numFungi = new System.Windows.Forms.NumericUpDown();
+            numHerb = new System.Windows.Forms.NumericUpDown();
+            numMagic = new System.Windows.Forms.NumericUpDown();
+            numMineral = new System.Windows.Forms.NumericUpDown();
+            numRoot = new System.Windows.Forms.NumericUpDown();
+            numSolution = new System.Windows.Forms.NumericUpDown();
             tabControl1.SuspendLayout();
             tabRecipes.SuspendLayout();
-            tabQueue.SuspendLayout();
+            tabBrew.SuspendLayout();
             tabInventory.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(numAnimal)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(numBerry)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(numFungi)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(numHerb)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(numMagic)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(numMineral)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(numRoot)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(numSolution)).BeginInit();
             SuspendLayout();
             //
             // tabControl1
             //
             tabControl1.Controls.Add(tabRecipes);
-            tabControl1.Controls.Add(tabQueue);
+            tabControl1.Controls.Add(tabBrew);
             tabControl1.Controls.Add(tabInventory);
             tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             tabControl1.Location = new System.Drawing.Point(0, 0);
@@ -60,9 +82,6 @@ namespace PotionApp
             //
             tabRecipes.Controls.Add(listRecipes);
             tabRecipes.Controls.Add(btnAdd);
-            tabRecipes.Controls.Add(btnEdit);
-            tabRecipes.Controls.Add(btnRemove);
-            tabRecipes.Controls.Add(btnQueue);
             tabRecipes.Location = new System.Drawing.Point(4, 24);
             tabRecipes.Name = "tabRecipes";
             tabRecipes.Padding = new System.Windows.Forms.Padding(3);
@@ -77,6 +96,7 @@ namespace PotionApp
             listRecipes.Location = new System.Drawing.Point(6, 6);
             listRecipes.Name = "listRecipes";
             listRecipes.Size = new System.Drawing.Size(400, 319);
+            listRecipes.DoubleClick += listRecipes_DoubleClick;
             //
             // btnAdd
             //
@@ -87,60 +107,98 @@ namespace PotionApp
             btnAdd.UseVisualStyleBackColor = true;
             btnAdd.Click += btnAdd_Click;
             //
-            // btnEdit
+            // tabBrew
             //
-            btnEdit.Location = new System.Drawing.Point(412, 35);
-            btnEdit.Name = "btnEdit";
-            btnEdit.Size = new System.Drawing.Size(75, 23);
-            btnEdit.Text = "Edit";
-            btnEdit.UseVisualStyleBackColor = true;
-            btnEdit.Click += btnEdit_Click;
+            tabBrew.Controls.Add(comboRecipes);
+            tabBrew.Controls.Add(btnAddQueue);
+            tabBrew.Controls.Add(listQueue);
+            tabBrew.Controls.Add(btnBrew);
+            tabBrew.Controls.Add(numAnimal);
+            tabBrew.Controls.Add(numBerry);
+            tabBrew.Controls.Add(numFungi);
+            tabBrew.Controls.Add(numHerb);
+            tabBrew.Controls.Add(numMagic);
+            tabBrew.Controls.Add(numMineral);
+            tabBrew.Controls.Add(numRoot);
+            tabBrew.Controls.Add(numSolution);
+            tabBrew.Location = new System.Drawing.Point(4, 24);
+            tabBrew.Name = "tabBrew";
+            tabBrew.Padding = new System.Windows.Forms.Padding(3);
+            tabBrew.Size = new System.Drawing.Size(576, 333);
+            tabBrew.Text = "Brewing";
+            tabBrew.UseVisualStyleBackColor = true;
             //
-            // btnRemove
+            // comboRecipes
             //
-            btnRemove.Location = new System.Drawing.Point(412, 64);
-            btnRemove.Name = "btnRemove";
-            btnRemove.Size = new System.Drawing.Size(75, 23);
-            btnRemove.Text = "Remove";
-            btnRemove.UseVisualStyleBackColor = true;
-            btnRemove.Click += btnRemove_Click;
+            comboRecipes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboRecipes.Location = new System.Drawing.Point(6, 170);
+            comboRecipes.Name = "comboRecipes";
+            comboRecipes.Size = new System.Drawing.Size(200, 23);
             //
-            // btnQueue
+            // btnAddQueue
             //
-            btnQueue.Location = new System.Drawing.Point(412, 93);
-            btnQueue.Name = "btnQueue";
-            btnQueue.Size = new System.Drawing.Size(75, 23);
-            btnQueue.Text = "Queue";
-            btnQueue.UseVisualStyleBackColor = true;
-            btnQueue.Click += btnQueue_Click;
-            //
-            // tabQueue
-            //
-            tabQueue.Controls.Add(listQueue);
-            tabQueue.Controls.Add(btnBrew);
-            tabQueue.Location = new System.Drawing.Point(4, 24);
-            tabQueue.Name = "tabQueue";
-            tabQueue.Padding = new System.Windows.Forms.Padding(3);
-            tabQueue.Size = new System.Drawing.Size(576, 333);
-            tabQueue.Text = "Queue";
-            tabQueue.UseVisualStyleBackColor = true;
+            btnAddQueue.Location = new System.Drawing.Point(212, 170);
+            btnAddQueue.Name = "btnAddQueue";
+            btnAddQueue.Size = new System.Drawing.Size(75, 23);
+            btnAddQueue.Text = "Add";
+            btnAddQueue.UseVisualStyleBackColor = true;
+            btnAddQueue.Click += btnAddQueue_Click;
             //
             // listQueue
             //
             listQueue.FormattingEnabled = true;
             listQueue.ItemHeight = 15;
-            listQueue.Location = new System.Drawing.Point(6, 6);
+            listQueue.Location = new System.Drawing.Point(6, 199);
             listQueue.Name = "listQueue";
-            listQueue.Size = new System.Drawing.Size(400, 319);
+            listQueue.Size = new System.Drawing.Size(400, 128);
             //
             // btnBrew
             //
-            btnBrew.Location = new System.Drawing.Point(412, 6);
+            btnBrew.Location = new System.Drawing.Point(412, 199);
             btnBrew.Name = "btnBrew";
             btnBrew.Size = new System.Drawing.Size(75, 23);
             btnBrew.Text = "Brew Next";
             btnBrew.UseVisualStyleBackColor = true;
             btnBrew.Click += btnBrew_Click;
+            //
+            // ingredient numeric controls
+            //
+            System.Windows.Forms.NumericUpDown[] nums = { numAnimal, numBerry, numFungi, numHerb, numMagic, numMineral, numRoot, numSolution };
+            string[] labels = { "Animal", "Berry", "Fungi", "Herb", "Magic", "Mineral", "Root", "Solution" };
+            for (int i = 0; i < nums.Length; i++)
+            {
+                int row = i / 4;
+                int col = i % 4;
+                int x = 6 + col * 140;
+                int y = 6 + row * 80;
+
+                Label lbl = new Label();
+                lbl.Text = labels[i];
+                lbl.Location = new System.Drawing.Point(x, y);
+                lbl.AutoSize = true;
+                tabBrew.Controls.Add(lbl);
+
+                Button btnMinus = new Button();
+                btnMinus.Text = "-";
+                btnMinus.Location = new System.Drawing.Point(x, y + 20);
+                btnMinus.Size = new System.Drawing.Size(20, 23);
+                btnMinus.Tag = nums[i];
+                btnMinus.Click += adjustAmount_Click;
+                tabBrew.Controls.Add(btnMinus);
+
+                nums[i].Location = new System.Drawing.Point(x + 24, y + 20);
+                nums[i].Maximum = 1000000;
+                nums[i].Size = new System.Drawing.Size(60, 23);
+                tabBrew.Controls.Add(nums[i]);
+
+                Button btnPlus = new Button();
+                btnPlus.Text = "+";
+                btnPlus.Location = new System.Drawing.Point(x + 88, y + 20);
+                btnPlus.Size = new System.Drawing.Size(20, 23);
+                btnPlus.Tag = nums[i];
+                btnPlus.Click += adjustAmount_Click;
+                tabBrew.Controls.Add(btnPlus);
+            }
             //
             // tabInventory
             //
@@ -171,8 +229,16 @@ namespace PotionApp
             Text = "Potion Manager";
             tabControl1.ResumeLayout(false);
             tabRecipes.ResumeLayout(false);
-            tabQueue.ResumeLayout(false);
+            tabBrew.ResumeLayout(false);
             tabInventory.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(numAnimal)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(numBerry)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(numFungi)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(numHerb)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(numMagic)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(numMineral)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(numRoot)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(numSolution)).EndInit();
             ResumeLayout(false);
         }
     }

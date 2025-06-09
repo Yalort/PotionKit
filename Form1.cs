@@ -28,7 +28,7 @@ namespace PotionApp
 
         private Recipe? SelectedRecipe => listRecipes.SelectedItem as Recipe;
 
-        private void btnEdit_Click(object sender, EventArgs e)
+        private void listRecipes_DoubleClick(object sender, EventArgs e)
         {
             if (SelectedRecipe == null) return;
             using var frm = new RecipeForm(SelectedRecipe);
@@ -38,18 +38,13 @@ namespace PotionApp
             }
         }
 
-        private void btnRemove_Click(object sender, EventArgs e)
+        private void btnAddQueue_Click(object sender, EventArgs e)
         {
-            if (SelectedRecipe == null) return;
-            recipes.Remove(SelectedRecipe);
-            RefreshRecipes();
-        }
-
-        private void btnQueue_Click(object sender, EventArgs e)
-        {
-            if (SelectedRecipe == null) return;
-            brewQueue.Enqueue(SelectedRecipe);
-            RefreshQueue();
+            if (comboRecipes.SelectedItem is Recipe rec)
+            {
+                brewQueue.Enqueue(rec);
+                RefreshQueue();
+            }
         }
 
         private void btnBrew_Click(object sender, EventArgs e)
@@ -60,6 +55,21 @@ namespace PotionApp
             inventory[rec.Name]++;
             RefreshQueue();
             RefreshInventory();
+        }
+
+        private void adjustAmount_Click(object sender, EventArgs e)
+        {
+            if (sender is not Button btn || btn.Tag is not NumericUpDown num) return;
+            bool shift = ModifierKeys.HasFlag(Keys.Shift);
+            bool ctrl = ModifierKeys.HasFlag(Keys.Control);
+            int delta = 1;
+            if (shift && ctrl) delta = 100;
+            else if (ctrl) delta = 10;
+            else if (shift) delta = 5;
+            if (btn.Text == "+")
+                num.Value = Math.Min(num.Maximum, num.Value + delta);
+            else
+                num.Value = Math.Max(num.Minimum, num.Value - delta);
         }
 
         private void listInventory_DoubleClick(object sender, EventArgs e)
@@ -82,6 +92,8 @@ namespace PotionApp
         {
             listRecipes.DataSource = null;
             listRecipes.DataSource = recipes;
+            comboRecipes.DataSource = null;
+            comboRecipes.DataSource = recipes;
         }
 
         private void RefreshQueue()
