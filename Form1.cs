@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Text.Json;
+using System.IO;
 
 namespace PotionApp
 {
@@ -10,11 +12,18 @@ namespace PotionApp
         private readonly Queue<Recipe> brewQueue = new();
         private readonly Dictionary<string, int> inventory = new();
 
+        private readonly string dataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "PotionKit");
+        private string IngredientsPath => Path.Combine(dataDir, "ingredients.json");
+        private string RecipesPath => Path.Combine(dataDir, "recipes.json");
+        private string InventoryPath => Path.Combine(dataDir, "inventory.json");
+
         public Form1()
         {
             InitializeComponent();
             SetupIngredientControls();
+            LoadData();
             RefreshAll();
+            FormClosing += Form1_FormClosing;
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -165,6 +174,88 @@ namespace PotionApp
             RefreshRecipes();
             RefreshQueue();
             RefreshInventory();
+        }
+
+        private void LoadData()
+        {
+            try
+            {
+                if (File.Exists(RecipesPath))
+                {
+                    var json = File.ReadAllText(RecipesPath);
+                    var list = JsonSerializer.Deserialize<List<Recipe>>(json);
+                    if (list != null)
+                    {
+                        recipes.Clear();
+                        recipes.AddRange(list);
+                    }
+                }
+
+                if (File.Exists(InventoryPath))
+                {
+                    var json = File.ReadAllText(InventoryPath);
+                    var dict = JsonSerializer.Deserialize<Dictionary<string, int>>(json);
+                    if (dict != null)
+                    {
+                        inventory.Clear();
+                        foreach (var kv in dict)
+                            inventory[kv.Key] = kv.Value;
+                    }
+                }
+
+                if (File.Exists(IngredientsPath))
+                {
+                    var json = File.ReadAllText(IngredientsPath);
+                    var dict = JsonSerializer.Deserialize<Dictionary<string, int>>(json);
+                    if (dict != null)
+                    {
+                        if (dict.TryGetValue("Animal", out var a)) numAnimal.Value = a;
+                        if (dict.TryGetValue("Berry", out var b)) numBerry.Value = b;
+                        if (dict.TryGetValue("Fungi", out var f)) numFungi.Value = f;
+                        if (dict.TryGetValue("Herb", out var h)) numHerb.Value = h;
+                        if (dict.TryGetValue("Magic", out var m)) numMagic.Value = m;
+                        if (dict.TryGetValue("Mineral", out var mi)) numMineral.Value = mi;
+                        if (dict.TryGetValue("Root", out var r)) numRoot.Value = r;
+                        if (dict.TryGetValue("Solution", out var s)) numSolution.Value = s;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to load data: " + ex.Message);
+            }
+        }
+
+        private void SaveData()
+        {
+            try
+            {
+                Directory.CreateDirectory(dataDir);
+                var ingredients = new Dictionary<string, int>
+                {
+                    ["Animal"] = (int)numAnimal.Value,
+                    ["Berry"] = (int)numBerry.Value,
+                    ["Fungi"] = (int)numFungi.Value,
+                    ["Herb"] = (int)numHerb.Value,
+                    ["Magic"] = (int)numMagic.Value,
+                    ["Mineral"] = (int)numMineral.Value,
+                    ["Root"] = (int)numRoot.Value,
+                    ["Solution"] = (int)numSolution.Value
+                };
+                var options = new JsonSerializerOptions { WriteIndented = true };
+                File.WriteAllText(IngredientsPath, JsonSerializer.Serialize(ingredients, options));
+                File.WriteAllText(RecipesPath, JsonSerializer.Serialize(recipes, options));
+                File.WriteAllText(InventoryPath, JsonSerializer.Serialize(inventory, options));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to save data: " + ex.Message);
+            }
+        }
+
+        private void Form1_FormClosing(object? sender, FormClosingEventArgs e)
+        {
+            SaveData();
         }
     }
 }
