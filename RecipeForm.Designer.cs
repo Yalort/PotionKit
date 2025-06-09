@@ -6,6 +6,7 @@ namespace PotionApp
     {
         private System.ComponentModel.IContainer components = null;
         private TextBox txtName;
+        private TextBox txtCategory;
         private NumericUpDown numAnimal;
         private NumericUpDown numBerry;
         private NumericUpDown numFungi;
@@ -39,6 +40,7 @@ namespace PotionApp
             numRoot = new NumericUpDown();
             numSolution = new NumericUpDown();
             txtSpecial = new TextBox();
+            txtCategory = new TextBox();
             btnOk = new Button();
             btnCancel = new Button();
             SuspendLayout();
@@ -51,12 +53,20 @@ namespace PotionApp
             txtName.TabIndex = 0;
             txtName.PlaceholderText = "Recipe Name";
             //
+            // txtCategory
+            //
+            txtCategory.Location = new System.Drawing.Point(12, 41);
+            txtCategory.Name = "txtCategory";
+            txtCategory.Size = new System.Drawing.Size(200, 23);
+            txtCategory.TabIndex = 1;
+            txtCategory.PlaceholderText = "Category";
+            //
             // txtSpecial
             //
-            txtSpecial.Location = new System.Drawing.Point(12, 41);
+            txtSpecial.Location = new System.Drawing.Point(12, 70);
             txtSpecial.Name = "txtSpecial";
             txtSpecial.Size = new System.Drawing.Size(200, 23);
-            txtSpecial.TabIndex = 1;
+            txtSpecial.TabIndex = 2;
             txtSpecial.PlaceholderText = "Special (comma separated)";
             //
             // numeric controls are configured in code
@@ -66,7 +76,7 @@ namespace PotionApp
             btnOk.Location = new System.Drawing.Point(56, 290);
             btnOk.Name = "btnOk";
             btnOk.Size = new System.Drawing.Size(75, 23);
-            btnOk.TabIndex = 2;
+            btnOk.TabIndex = 3;
             btnOk.Text = "OK";
             btnOk.UseVisualStyleBackColor = true;
             btnOk.Click += btnOk_Click;
@@ -77,7 +87,7 @@ namespace PotionApp
             btnCancel.Location = new System.Drawing.Point(137, 290);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new System.Drawing.Size(75, 23);
-            btnCancel.TabIndex = 3;
+            btnCancel.TabIndex = 4;
             btnCancel.Text = "Cancel";
             btnCancel.UseVisualStyleBackColor = true;
             //
@@ -87,6 +97,7 @@ namespace PotionApp
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(224, 360);
             Controls.Add(txtName);
+            Controls.Add(txtCategory);
             Controls.Add(txtSpecial);
             Controls.Add(btnOk);
             Controls.Add(btnCancel);

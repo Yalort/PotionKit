@@ -13,6 +13,8 @@ namespace PotionApp
         private readonly List<Recipe> recipes = new();
         private readonly Queue<Recipe> brewQueue = new();
         private readonly Dictionary<string, int> inventory = new();
+        private readonly Dictionary<string, string> potionCategories = new();
+        private readonly HashSet<string> categories = new();
         private readonly string[] ingredientNames = { "Animal", "Berry", "Fungi", "Herb", "Magic", "Mineral", "Root", "Solution", "Bottles" };
         private NumericUpDown[] ingredientControls = Array.Empty<NumericUpDown>();
         private readonly ContextMenuStrip inventoryMenu = new();
@@ -28,6 +30,7 @@ namespace PotionApp
         private string IngredientsPath => Path.Combine(dataDir, "ingredients.json");
         private string RecipesPath => Path.Combine(dataDir, "recipes.json");
         private string InventoryPath => Path.Combine(dataDir, "inventory.json");
+        private string PotionCategoriesPath => Path.Combine(dataDir, "potion_categories.json");
 
         public Form1()
         {
@@ -36,16 +39,20 @@ namespace PotionApp
             inventoryMenu.Items.Add("Edit Count", null, inventoryEditCount_Click);
             inventoryMenu.Items.Add("Rename", null, inventoryRename_Click);
             inventoryMenu.Items.Add("Add To Queue", null, inventoryAddQueue_Click);
+            inventoryMenu.Items.Add("Set Category", null, inventorySetCategory_Click);
             listInventory.ContextMenuStrip = inventoryMenu;
             listInventory.MouseDown += listInventory_MouseDown;
 
             recipeMenu.Items.Add("Edit", null, recipeEdit_Click);
             recipeMenu.Items.Add("Delete", null, recipeDelete_Click);
+            recipeMenu.Items.Add("Set Category", null, recipeSetCategory_Click);
             listRecipes.ContextMenuStrip = recipeMenu;
             listRecipes.MouseDown += listRecipes_MouseDown;
             SetupIngredientControls();
             lblRecipeColumns.Text = Recipe.Header;
             lblQueueColumns.Text = Recipe.Header;
+            cmbRecipeFilter.SelectedIndexChanged += (s, e) => RefreshRecipes();
+            cmbInventoryFilter.SelectedIndexChanged += (s, e) => RefreshInventory();
             LoadData();
             RefreshAll();
             FormClosing += Form1_FormClosing;
@@ -413,9 +420,14 @@ namespace PotionApp
         private void RefreshRecipes()
         {
             listRecipes.DataSource = null;
-            listRecipes.DataSource = recipes;
             listBrewRecipes.DataSource = null;
-            listBrewRecipes.DataSource = recipes;
+            var filter = cmbRecipeFilter.SelectedItem as string;
+            IEnumerable<Recipe> list = recipes;
+            if (!string.IsNullOrEmpty(filter) && filter != "All")
+                list = recipes.Where(r => r.Category.Equals(filter, StringComparison.OrdinalIgnoreCase));
+            var arr = list.ToList();
+            listRecipes.DataSource = arr;
+            listBrewRecipes.DataSource = arr;
         }
 
         private void RefreshQueue()
@@ -429,9 +441,12 @@ namespace PotionApp
         {
             listInventory.DataSource = null;
             var items = new List<string>();
+            var filter = cmbInventoryFilter.SelectedItem as string;
             foreach (var kv in inventory)
             {
-                items.Add($"{kv.Key}: {kv.Value}");
+                potionCategories.TryGetValue(kv.Key, out var cat);
+                if (string.IsNullOrEmpty(filter) || filter == "All" || cat == filter)
+                    items.Add($"{kv.Key}: {kv.Value}");
             }
             listInventory.DataSource = items;
         }
@@ -537,6 +552,18 @@ namespace PotionApp
                     }
                 }
 
+                if (File.Exists(PotionCategoriesPath))
+                {
+                    var json = File.ReadAllText(PotionCategoriesPath);
+                    var dict = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
+                    if (dict != null)
+                    {
+                        potionCategories.Clear();
+                        foreach (var kv in dict)
+                            potionCategories[kv.Key] = kv.Value;
+                    }
+                }
+
                 if (File.Exists(IngredientsPath))
                 {
                     var json = File.ReadAllText(IngredientsPath);
@@ -559,6 +586,10 @@ namespace PotionApp
                     }
                 }
                 UpdateWaterUI();
+                categories.Clear();
+                foreach (var r in recipes) AddCategory(r.Category);
+                foreach (var c in potionCategories.Values) AddCategory(c);
+                UpdateCategoryFilters();
             }
             catch (Exception ex)
             {
@@ -589,11 +620,61 @@ namespace PotionApp
                 File.WriteAllText(IngredientsPath, JsonSerializer.Serialize(ingredients, options));
                 File.WriteAllText(RecipesPath, JsonSerializer.Serialize(recipes, options));
                 File.WriteAllText(InventoryPath, JsonSerializer.Serialize(inventory, options));
+                File.WriteAllText(PotionCategoriesPath, JsonSerializer.Serialize(potionCategories, options));
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Failed to save data: " + ex.Message);
             }
+        }
+
+        private void AddCategory(string? cat)
+        {
+            if (string.IsNullOrWhiteSpace(cat)) return;
+            categories.Add(cat.Trim());
+        }
+
+        private void UpdateCategoryFilters()
+        {
+            var list = new List<string> { "All" };
+            list.AddRange(categories.OrderBy(c => c, StringComparer.OrdinalIgnoreCase));
+            var selR = cmbRecipeFilter.SelectedItem as string;
+            var selI = cmbInventoryFilter.SelectedItem as string;
+            cmbRecipeFilter.DataSource = list.ToList();
+            cmbInventoryFilter.DataSource = list.ToList();
+            if (selR != null && list.Contains(selR)) cmbRecipeFilter.SelectedItem = selR;
+            if (selI != null && list.Contains(selI)) cmbInventoryFilter.SelectedItem = selI;
+        }
+
+        private void inventorySetCategory_Click(object? sender, EventArgs e)
+        {
+            if (listInventory.SelectedItem is not string item) return;
+            var name = item.Split(':')[0].Trim();
+            potionCategories.TryGetValue(name, out var current);
+            var input = SimplePrompt.ShowDialog("Enter category:", "Set Category", current ?? string.Empty);
+            if (input == null) return;
+            input = input.Trim();
+            if (input.Length == 0)
+                potionCategories.Remove(name);
+            else
+            {
+                potionCategories[name] = input;
+                AddCategory(input);
+            }
+            UpdateCategoryFilters();
+            RefreshInventory();
+        }
+
+        private void recipeSetCategory_Click(object? sender, EventArgs e)
+        {
+            if (SelectedRecipe == null) return;
+            var input = SimplePrompt.ShowDialog("Enter category:", "Set Category", SelectedRecipe.Category);
+            if (input == null) return;
+            SelectedRecipe.Category = input.Trim();
+            AddCategory(SelectedRecipe.Category);
+            UpdateCategoryFilters();
+            RefreshRecipes();
+            RefreshQueue();
         }
 
         private void Form1_FormClosing(object? sender, FormClosingEventArgs e)

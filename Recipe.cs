@@ -5,6 +5,7 @@ namespace PotionApp
     public class Recipe
     {
         public string Name { get; set; } = "";
+        public string Category { get; set; } = "";
         public int Animal { get; set; }
         public int Berry { get; set; }
         public int Fungi { get; set; }
