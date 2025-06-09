@@ -81,6 +81,12 @@ namespace PotionApp
         private void btnBrew_Click(object sender, EventArgs e)
         {
             if (brewQueue.Count == 0) return;
+            int totalWaterNeeded = brewQueue.Count * 200;
+            if (waterAmount < totalWaterNeeded)
+            {
+                MessageBox.Show("Not enough water", "Cannot Brew", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             while (brewQueue.Count > 0)
             {
                 var rec = brewQueue.Peek();
