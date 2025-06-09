@@ -70,24 +70,48 @@ namespace PotionApp
             if (brewQueue.Count == 0) return;
             while (brewQueue.Count > 0)
             {
-                var rec = brewQueue.Dequeue();
+                var rec = brewQueue.Peek();
+                string? err = GetBrewError(rec);
+                if (err != null)
+                {
+                    MessageBox.Show(err, "Cannot Brew", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+                }
+
+                brewQueue.Dequeue();
                 if (!inventory.ContainsKey(rec.Name)) inventory[rec.Name] = 0;
                 inventory[rec.Name]++;
-                ingredientControls[0].Value = Math.Max(0, ingredientControls[0].Value - rec.Animal);
-                ingredientControls[1].Value = Math.Max(0, ingredientControls[1].Value - rec.Berry);
-                ingredientControls[2].Value = Math.Max(0, ingredientControls[2].Value - rec.Fungi);
-                ingredientControls[3].Value = Math.Max(0, ingredientControls[3].Value - rec.Herb);
-                ingredientControls[4].Value = Math.Max(0, ingredientControls[4].Value - rec.Magic);
-                ingredientControls[5].Value = Math.Max(0, ingredientControls[5].Value - rec.Mineral);
-                ingredientControls[6].Value = Math.Max(0, ingredientControls[6].Value - rec.Root);
-                ingredientControls[7].Value = Math.Max(0, ingredientControls[7].Value - rec.Solution);
-                ingredientControls[8].Value = Math.Max(0, ingredientControls[8].Value - 1);
-                waterAmount = Math.Max(0, waterAmount - 200);
+                ingredientControls[0].Value -= rec.Animal;
+                ingredientControls[1].Value -= rec.Berry;
+                ingredientControls[2].Value -= rec.Fungi;
+                ingredientControls[3].Value -= rec.Herb;
+                ingredientControls[4].Value -= rec.Magic;
+                ingredientControls[5].Value -= rec.Mineral;
+                ingredientControls[6].Value -= rec.Root;
+                ingredientControls[7].Value -= rec.Solution;
+                ingredientControls[8].Value -= 1;
+                waterAmount -= 200;
             }
             RefreshQueue();
             RefreshInventory();
             RefreshTotals();
             UpdateWaterUI();
+        }
+
+        private string? GetBrewError(Recipe rec)
+        {
+            if (waterAmount < 200)
+                return "Not enough water";
+            if (ingredientControls[8].Value < 1)
+                return "Not enough bottles";
+
+            int[] needs = { rec.Animal, rec.Berry, rec.Fungi, rec.Herb, rec.Magic, rec.Mineral, rec.Root, rec.Solution };
+            for (int i = 0; i < needs.Length; i++)
+            {
+                if (ingredientControls[i].Value < needs[i])
+                    return $"Not enough {ingredientNames[i]}";
+            }
+            return null;
         }
 
         private void adjustAmount_Click(object sender, EventArgs e)
