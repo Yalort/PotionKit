@@ -207,7 +207,7 @@ namespace PotionApp
             listBrewRecipes.ItemHeight = 15;
             listBrewRecipes.Location = new System.Drawing.Point(6, 6);
             listBrewRecipes.Name = "listBrewRecipes";
-            listBrewRecipes.Size = new System.Drawing.Size(400, 169);
+            listBrewRecipes.Size = new System.Drawing.Size(400, 436);
             listBrewRecipes.Font = new System.Drawing.Font("Consolas", 9F);
             listBrewRecipes.DoubleClick += listBrewRecipes_DoubleClick;
             //
