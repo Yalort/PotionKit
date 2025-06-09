@@ -49,28 +49,11 @@ namespace PotionApp
             txtName.TabIndex = 0;
             txtName.PlaceholderText = "Recipe Name";
             //
-            // numeric controls
-            //
-            int top = 50;
-            NumericUpDown[] nums = { numAnimal, numBerry, numFungi, numHerb, numMagic, numMineral, numRoot, numSolution };
-            string[] labels = { "Animal", "Berry", "Fungi", "Herb", "Magic", "Mineral", "Root", "Solution" };
-            for (int i = 0; i < nums.Length; i++)
-            {
-                Label lbl = new Label();
-                lbl.Text = labels[i];
-                lbl.Location = new System.Drawing.Point(12, top + i * 30);
-                lbl.AutoSize = true;
-                Controls.Add(lbl);
-
-                nums[i].Location = new System.Drawing.Point(80, top + i * 30 - 3);
-                nums[i].Name = "num" + labels[i];
-                nums[i].Maximum = 1000;
-                Controls.Add(nums[i]);
-            }
+            // numeric controls are configured in code
             //
             // btnOk
             //
-            btnOk.Location = new System.Drawing.Point(56, top + nums.Length * 30);
+            btnOk.Location = new System.Drawing.Point(56, 290);
             btnOk.Name = "btnOk";
             btnOk.Size = new System.Drawing.Size(75, 23);
             btnOk.TabIndex = 1;
@@ -81,7 +64,7 @@ namespace PotionApp
             // btnCancel
             //
             btnCancel.DialogResult = DialogResult.Cancel;
-            btnCancel.Location = new System.Drawing.Point(137, top + nums.Length * 30);
+            btnCancel.Location = new System.Drawing.Point(137, 290);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new System.Drawing.Size(75, 23);
             btnCancel.TabIndex = 2;
@@ -92,7 +75,7 @@ namespace PotionApp
             //
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(224, top + nums.Length * 30 + 40);
+            ClientSize = new System.Drawing.Size(224, 330);
             Controls.Add(txtName);
             Controls.Add(btnOk);
             Controls.Add(btnCancel);

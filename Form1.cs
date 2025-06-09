@@ -13,6 +13,7 @@ namespace PotionApp
         public Form1()
         {
             InitializeComponent();
+            SetupIngredientControls();
             RefreshAll();
         }
 
@@ -85,6 +86,52 @@ namespace PotionApp
                     if (inventory[name] <= 0) inventory.Remove(name);
                     RefreshInventory();
                 }
+            }
+        }
+
+        private void SetupIngredientControls()
+        {
+            NumericUpDown[] nums = { numAnimal, numBerry, numFungi, numHerb, numMagic, numMineral, numRoot, numSolution };
+            string[] labels = { "Animal", "Berry", "Fungi", "Herb", "Magic", "Mineral", "Root", "Solution" };
+            for (int i = 0; i < nums.Length; i++)
+            {
+                int row = i / 4;
+                int col = i % 4;
+                int x = 6 + col * 140;
+                int y = 6 + row * 80;
+
+                Label lbl = new Label
+                {
+                    Text = labels[i],
+                    Location = new System.Drawing.Point(x, y),
+                    AutoSize = true
+                };
+                tabBrew.Controls.Add(lbl);
+
+                Button btnMinus = new Button
+                {
+                    Text = "-",
+                    Location = new System.Drawing.Point(x, y + 20),
+                    Size = new System.Drawing.Size(20, 23),
+                    Tag = nums[i]
+                };
+                btnMinus.Click += adjustAmount_Click;
+                tabBrew.Controls.Add(btnMinus);
+
+                nums[i].Location = new System.Drawing.Point(x + 24, y + 20);
+                nums[i].Maximum = 1000000;
+                nums[i].Size = new System.Drawing.Size(60, 23);
+                tabBrew.Controls.Add(nums[i]);
+
+                Button btnPlus = new Button
+                {
+                    Text = "+",
+                    Location = new System.Drawing.Point(x + 88, y + 20),
+                    Size = new System.Drawing.Size(20, 23),
+                    Tag = nums[i]
+                };
+                btnPlus.Click += adjustAmount_Click;
+                tabBrew.Controls.Add(btnPlus);
             }
         }
 

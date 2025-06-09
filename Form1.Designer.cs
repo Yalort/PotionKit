@@ -161,45 +161,6 @@ namespace PotionApp
             btnBrew.UseVisualStyleBackColor = true;
             btnBrew.Click += btnBrew_Click;
             //
-            // ingredient numeric controls
-            //
-            System.Windows.Forms.NumericUpDown[] nums = { numAnimal, numBerry, numFungi, numHerb, numMagic, numMineral, numRoot, numSolution };
-            string[] labels = { "Animal", "Berry", "Fungi", "Herb", "Magic", "Mineral", "Root", "Solution" };
-            for (int i = 0; i < nums.Length; i++)
-            {
-                int row = i / 4;
-                int col = i % 4;
-                int x = 6 + col * 140;
-                int y = 6 + row * 80;
-
-                Label lbl = new Label();
-                lbl.Text = labels[i];
-                lbl.Location = new System.Drawing.Point(x, y);
-                lbl.AutoSize = true;
-                tabBrew.Controls.Add(lbl);
-
-                Button btnMinus = new Button();
-                btnMinus.Text = "-";
-                btnMinus.Location = new System.Drawing.Point(x, y + 20);
-                btnMinus.Size = new System.Drawing.Size(20, 23);
-                btnMinus.Tag = nums[i];
-                btnMinus.Click += adjustAmount_Click;
-                tabBrew.Controls.Add(btnMinus);
-
-                nums[i].Location = new System.Drawing.Point(x + 24, y + 20);
-                nums[i].Maximum = 1000000;
-                nums[i].Size = new System.Drawing.Size(60, 23);
-                tabBrew.Controls.Add(nums[i]);
-
-                Button btnPlus = new Button();
-                btnPlus.Text = "+";
-                btnPlus.Location = new System.Drawing.Point(x + 88, y + 20);
-                btnPlus.Size = new System.Drawing.Size(20, 23);
-                btnPlus.Tag = nums[i];
-                btnPlus.Click += adjustAmount_Click;
-                tabBrew.Controls.Add(btnPlus);
-            }
-            //
             // tabInventory
             //
             tabInventory.Controls.Add(listInventory);
