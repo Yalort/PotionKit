@@ -123,6 +123,7 @@ namespace PotionApp
             listRecipes.Location = new System.Drawing.Point(6, 26);
             listRecipes.Name = "listRecipes";
             listRecipes.Size = new System.Drawing.Size(400, 299);
+            listRecipes.Font = new System.Drawing.Font("Consolas", 9F);
             listRecipes.DoubleClick += listRecipes_DoubleClick;
             //
             // lblRecipeColumns
@@ -132,6 +133,7 @@ namespace PotionApp
             lblRecipeColumns.Name = "lblRecipeColumns";
             lblRecipeColumns.Size = new System.Drawing.Size(0, 15);
             lblRecipeColumns.TabIndex = 3;
+            lblRecipeColumns.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Bold);
             //
             // btnAdd
             //
@@ -194,6 +196,7 @@ namespace PotionApp
             listQueue.Location = new System.Drawing.Point(6, 199);
             listQueue.Name = "listQueue";
             listQueue.Size = new System.Drawing.Size(400, 128);
+            listQueue.Font = new System.Drawing.Font("Consolas", 9F);
             //
             // lblQueueColumns
             //
@@ -202,6 +205,7 @@ namespace PotionApp
             lblQueueColumns.Name = "lblQueueColumns";
             lblQueueColumns.Size = new System.Drawing.Size(0, 15);
             lblQueueColumns.TabIndex = 9;
+            lblQueueColumns.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Bold);
             //
             // btnBrew
             //
@@ -219,6 +223,7 @@ namespace PotionApp
             rtbTotals.ReadOnly = true;
             rtbTotals.Size = new System.Drawing.Size(150, 99);
             rtbTotals.TabStop = false;
+            rtbTotals.Font = new System.Drawing.Font("Consolas", 9F);
             //
             // lblWater
             //
