@@ -21,7 +21,8 @@ namespace PotionApp
         private readonly ContextMenuStrip recipeMenu = new();
 
         // Horizontal offset used when laying out controls on the Brewing tab
-        private const int BrewOffsetX = 620;
+        // Moved left slightly so controls do not overlap the water UI
+        private const int BrewOffsetX = 500;
 
         private int waterCapacity = 1000;
         private int waterAmount = 1000;
@@ -64,6 +65,8 @@ namespace PotionApp
             if (frm.ShowDialog(this) == DialogResult.OK)
             {
                 recipes.Add(frm.Recipe);
+                RebuildCategories();
+                UpdateCategoryFilters();
                 RefreshRecipes();
             }
         }
@@ -76,6 +79,8 @@ namespace PotionApp
             using var frm = new RecipeForm(SelectedRecipe);
             if (frm.ShowDialog(this) == DialogResult.OK)
             {
+                RebuildCategories();
+                UpdateCategoryFilters();
                 RefreshRecipes();
             }
         }
@@ -228,6 +233,8 @@ namespace PotionApp
                 {
                     inventory[name] = count - 1;
                     if (inventory[name] <= 0) inventory.Remove(name);
+                    RebuildCategories();
+                    UpdateCategoryFilters();
                     RefreshInventory();
                 }
             }
@@ -240,6 +247,8 @@ namespace PotionApp
             int count = (int)numInventoryCount.Value;
             if (!inventory.ContainsKey(name)) inventory[name] = 0;
             inventory[name] += count;
+            RebuildCategories();
+            UpdateCategoryFilters();
             RefreshInventory();
         }
 
@@ -283,6 +292,8 @@ namespace PotionApp
             if (frm.ShowDialog(this) == DialogResult.OK)
             {
                 recipes.Add(frm.Recipe);
+                RebuildCategories();
+                UpdateCategoryFilters();
                 RefreshRecipes();
             }
         }
@@ -300,6 +311,8 @@ namespace PotionApp
                     inventory.Remove(name);
                 else
                     inventory[name] = newCount;
+                RebuildCategories();
+                UpdateCategoryFilters();
                 RefreshInventory();
             }
             else
@@ -321,6 +334,8 @@ namespace PotionApp
             if (!inventory.ContainsKey(newName))
                 inventory[newName] = 0;
             inventory[newName] += count;
+            RebuildCategories();
+            UpdateCategoryFilters();
             RefreshInventory();
         }
 
@@ -346,6 +361,8 @@ namespace PotionApp
             using var frm = new RecipeForm(SelectedRecipe);
             if (frm.ShowDialog(this) == DialogResult.OK)
             {
+                RebuildCategories();
+                UpdateCategoryFilters();
                 RefreshRecipes();
                 RefreshQueue();
             }
@@ -360,6 +377,8 @@ namespace PotionApp
             brewQueue.Clear();
             foreach (var r in items)
                 brewQueue.Enqueue(r);
+            RebuildCategories();
+            UpdateCategoryFilters();
             RefreshRecipes();
             RefreshQueue();
         }
@@ -628,6 +647,14 @@ namespace PotionApp
             }
         }
 
+        // Rebuild the list of all categories from recipes and potion mappings
+        private void RebuildCategories()
+        {
+            categories.Clear();
+            foreach (var r in recipes) AddCategory(r.Category);
+            foreach (var c in potionCategories.Values) AddCategory(c);
+        }
+
         private void AddCategory(string? cat)
         {
             if (string.IsNullOrWhiteSpace(cat)) return;
@@ -661,6 +688,7 @@ namespace PotionApp
                 potionCategories[name] = input;
                 AddCategory(input);
             }
+            RebuildCategories();
             UpdateCategoryFilters();
             RefreshInventory();
         }
@@ -672,6 +700,7 @@ namespace PotionApp
             if (input == null) return;
             SelectedRecipe.Category = input.Trim();
             AddCategory(SelectedRecipe.Category);
+            RebuildCategories();
             UpdateCategoryFilters();
             RefreshRecipes();
             RefreshQueue();
