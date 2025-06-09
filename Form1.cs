@@ -13,8 +13,10 @@ namespace PotionApp
         private readonly List<Recipe> recipes = new();
         private readonly Queue<Recipe> brewQueue = new();
         private readonly Dictionary<string, int> inventory = new();
-        private readonly string[] ingredientNames = { "Animal", "Berry", "Fungi", "Herb", "Magic", "Mineral", "Root", "Solution" };
+        private readonly string[] ingredientNames = { "Animal", "Berry", "Fungi", "Herb", "Magic", "Mineral", "Root", "Solution", "Bottles" };
         private NumericUpDown[] ingredientControls = Array.Empty<NumericUpDown>();
+
+        private int waterAmount = 1000;
 
         private readonly string dataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "potionkit2");
         private string IngredientsPath => Path.Combine(dataDir, "ingredients.json");
@@ -79,10 +81,13 @@ namespace PotionApp
                 ingredientControls[5].Value = Math.Max(0, ingredientControls[5].Value - rec.Mineral);
                 ingredientControls[6].Value = Math.Max(0, ingredientControls[6].Value - rec.Root);
                 ingredientControls[7].Value = Math.Max(0, ingredientControls[7].Value - rec.Solution);
+                ingredientControls[8].Value = Math.Max(0, ingredientControls[8].Value - 1);
+                waterAmount = Math.Max(0, waterAmount - 200);
             }
             RefreshQueue();
             RefreshInventory();
             RefreshTotals();
+            UpdateWaterUI();
         }
 
         private void adjustAmount_Click(object sender, EventArgs e)
@@ -98,6 +103,27 @@ namespace PotionApp
                 num.Value = Math.Min(num.Maximum, num.Value + delta);
             else
                 num.Value = Math.Max(num.Minimum, num.Value - delta);
+        }
+
+        private void adjustWater_Click(object sender, EventArgs e)
+        {
+            bool shift = ModifierKeys.HasFlag(Keys.Shift);
+            bool ctrl = ModifierKeys.HasFlag(Keys.Control);
+            int delta = 1;
+            if (shift && ctrl) delta = 100;
+            else if (ctrl) delta = 10;
+            else if (shift) delta = 5;
+            if (sender is Button btn && btn == btnWaterPlus)
+                waterAmount = Math.Min(1000, waterAmount + delta);
+            else
+                waterAmount = Math.Max(0, waterAmount - delta);
+            UpdateWaterUI();
+        }
+
+        private void btnFillWater_Click(object sender, EventArgs e)
+        {
+            waterAmount = 1000;
+            UpdateWaterUI();
         }
 
         private void listInventory_DoubleClick(object sender, EventArgs e)
@@ -142,7 +168,7 @@ namespace PotionApp
 
         private void SetupIngredientControls()
         {
-            NumericUpDown[] nums = { numAnimal, numBerry, numFungi, numHerb, numMagic, numMineral, numRoot, numSolution };
+            NumericUpDown[] nums = { numAnimal, numBerry, numFungi, numHerb, numMagic, numMineral, numRoot, numSolution, numBottles };
             ingredientControls = nums;
             string[] labels = ingredientNames;
             for (int i = 0; i < nums.Length; i++)
@@ -151,6 +177,11 @@ namespace PotionApp
                 int col = i % 4;
                 int x = 6 + col * 140;
                 int y = 6 + row * 80;
+                if (i == nums.Length - 1)
+                {
+                    x = 6 + 3 * 140;
+                    y -= 20;
+                }
 
                 Label lbl = new Label
                 {
@@ -220,6 +251,7 @@ namespace PotionApp
             RefreshQueue();
             RefreshInventory();
             RefreshTotals();
+            UpdateWaterUI();
         }
 
         private void RefreshTotals()
@@ -237,6 +269,7 @@ namespace PotionApp
                 totals[5] += r.Mineral;
                 totals[6] += r.Root;
                 totals[7] += r.Solution;
+                totals[8] += 1; // bottles
                 if (!string.IsNullOrWhiteSpace(r.Special))
                 {
                     foreach (var sp in r.Special.Split(',', StringSplitOptions.RemoveEmptyEntries))
@@ -261,6 +294,14 @@ namespace PotionApp
                 rtbTotals.SelectionColor = System.Drawing.Color.Black;
                 rtbTotals.AppendText(")\n");
             }
+            int waterNeeded = brewQueue.Count * 200;
+            int waterRemain = waterAmount - waterNeeded;
+            rtbTotals.SelectionColor = System.Drawing.Color.Black;
+            rtbTotals.AppendText($"Water: {waterNeeded} (");
+            if (waterRemain < 0) rtbTotals.SelectionColor = System.Drawing.Color.Red;
+            rtbTotals.AppendText(waterRemain.ToString());
+            rtbTotals.SelectionColor = System.Drawing.Color.Black;
+            rtbTotals.AppendText(")\n");
             if (specialCounts.Count > 0)
             {
                 rtbTotals.AppendText("\nSpecial Ingredients:\n");
@@ -269,6 +310,12 @@ namespace PotionApp
                     rtbTotals.AppendText($"{kv.Key}: {kv.Value}\n");
                 }
             }
+        }
+
+        private void UpdateWaterUI()
+        {
+            barWater.Value = Math.Max(0, Math.Min(1000, waterAmount));
+            lblWater.Text = $"Water: {waterAmount} mL";
         }
 
         private void LoadData()
@@ -312,8 +359,11 @@ namespace PotionApp
                         if (dict.TryGetValue("Mineral", out var mi)) numMineral.Value = mi;
                         if (dict.TryGetValue("Root", out var r)) numRoot.Value = r;
                         if (dict.TryGetValue("Solution", out var s)) numSolution.Value = s;
+                        if (dict.TryGetValue("Bottles", out var bo)) numBottles.Value = bo;
+                        if (dict.TryGetValue("Water", out var w)) waterAmount = Math.Max(0, Math.Min(1000, w));
                     }
                 }
+                UpdateWaterUI();
             }
             catch (Exception ex)
             {
@@ -335,7 +385,9 @@ namespace PotionApp
                     ["Magic"] = (int)numMagic.Value,
                     ["Mineral"] = (int)numMineral.Value,
                     ["Root"] = (int)numRoot.Value,
-                    ["Solution"] = (int)numSolution.Value
+                    ["Solution"] = (int)numSolution.Value,
+                    ["Bottles"] = (int)numBottles.Value,
+                    ["Water"] = waterAmount
                 };
                 var options = new JsonSerializerOptions { WriteIndented = true };
                 File.WriteAllText(IngredientsPath, JsonSerializer.Serialize(ingredients, options));

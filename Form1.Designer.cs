@@ -25,6 +25,12 @@ namespace PotionApp
         private System.Windows.Forms.NumericUpDown numMineral;
         private System.Windows.Forms.NumericUpDown numRoot;
         private System.Windows.Forms.NumericUpDown numSolution;
+        private System.Windows.Forms.NumericUpDown numBottles;
+        private System.Windows.Forms.ProgressBar barWater;
+        private System.Windows.Forms.Label lblWater;
+        private System.Windows.Forms.Button btnWaterPlus;
+        private System.Windows.Forms.Button btnWaterMinus;
+        private System.Windows.Forms.Button btnFillWater;
         private System.Windows.Forms.RichTextBox rtbTotals;
         private System.Windows.Forms.Label lblRecipeColumns;
         private System.Windows.Forms.Label lblQueueColumns;
@@ -62,6 +68,12 @@ namespace PotionApp
             numMineral = new System.Windows.Forms.NumericUpDown();
             numRoot = new System.Windows.Forms.NumericUpDown();
             numSolution = new System.Windows.Forms.NumericUpDown();
+            numBottles = new System.Windows.Forms.NumericUpDown();
+            barWater = new System.Windows.Forms.ProgressBar();
+            lblWater = new System.Windows.Forms.Label();
+            btnWaterPlus = new System.Windows.Forms.Button();
+            btnWaterMinus = new System.Windows.Forms.Button();
+            btnFillWater = new System.Windows.Forms.Button();
             rtbTotals = new System.Windows.Forms.RichTextBox();
             tabControl1.SuspendLayout();
             tabRecipes.SuspendLayout();
@@ -75,6 +87,7 @@ namespace PotionApp
             ((System.ComponentModel.ISupportInitialize)(numMineral)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(numRoot)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(numSolution)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(numBottles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(numInventoryCount)).BeginInit();
             SuspendLayout();
             //
@@ -143,6 +156,12 @@ namespace PotionApp
             tabBrew.Controls.Add(numMineral);
             tabBrew.Controls.Add(numRoot);
             tabBrew.Controls.Add(numSolution);
+            tabBrew.Controls.Add(numBottles);
+            tabBrew.Controls.Add(barWater);
+            tabBrew.Controls.Add(lblWater);
+            tabBrew.Controls.Add(btnWaterPlus);
+            tabBrew.Controls.Add(btnWaterMinus);
+            tabBrew.Controls.Add(btnFillWater);
             tabBrew.Location = new System.Drawing.Point(4, 24);
             tabBrew.Name = "tabBrew";
             tabBrew.Padding = new System.Windows.Forms.Padding(3);
@@ -198,6 +217,49 @@ namespace PotionApp
             rtbTotals.ReadOnly = true;
             rtbTotals.Size = new System.Drawing.Size(150, 99);
             rtbTotals.TabStop = false;
+            //
+            // lblWater
+            //
+            lblWater.AutoSize = true;
+            lblWater.Location = new System.Drawing.Point(412, 6);
+            lblWater.Name = "lblWater";
+            lblWater.Size = new System.Drawing.Size(45, 15);
+            lblWater.Text = "Water";
+            //
+            // barWater
+            //
+            barWater.Location = new System.Drawing.Point(412, 24);
+            barWater.Maximum = 1000;
+            barWater.Name = "barWater";
+            barWater.Size = new System.Drawing.Size(150, 23);
+            barWater.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            //
+            // btnWaterPlus
+            //
+            btnWaterPlus.Location = new System.Drawing.Point(412, 53);
+            btnWaterPlus.Name = "btnWaterPlus";
+            btnWaterPlus.Size = new System.Drawing.Size(23, 23);
+            btnWaterPlus.Text = "+";
+            btnWaterPlus.UseVisualStyleBackColor = true;
+            btnWaterPlus.Click += adjustWater_Click;
+            //
+            // btnWaterMinus
+            //
+            btnWaterMinus.Location = new System.Drawing.Point(441, 53);
+            btnWaterMinus.Name = "btnWaterMinus";
+            btnWaterMinus.Size = new System.Drawing.Size(23, 23);
+            btnWaterMinus.Text = "-";
+            btnWaterMinus.UseVisualStyleBackColor = true;
+            btnWaterMinus.Click += adjustWater_Click;
+            //
+            // btnFillWater
+            //
+            btnFillWater.Location = new System.Drawing.Point(470, 53);
+            btnFillWater.Name = "btnFillWater";
+            btnFillWater.Size = new System.Drawing.Size(92, 23);
+            btnFillWater.Text = "Fill";
+            btnFillWater.UseVisualStyleBackColor = true;
+            btnFillWater.Click += btnFillWater_Click;
             //
             // tabInventory
             //
@@ -267,6 +329,7 @@ namespace PotionApp
             ((System.ComponentModel.ISupportInitialize)(numMineral)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(numRoot)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(numSolution)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(numBottles)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(numInventoryCount)).EndInit();
             ResumeLayout(false);
         }
