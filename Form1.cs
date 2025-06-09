@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using System.Text.Json;
 using System.IO;
@@ -138,6 +140,30 @@ namespace PotionApp
                     RefreshInventory();
                 }
             }
+        }
+
+        private void btnInventoryAdd_Click(object sender, EventArgs e)
+        {
+            var name = txtInventoryName.Text.Trim();
+            if (string.IsNullOrEmpty(name)) return;
+            int count = (int)numInventoryCount.Value;
+            if (!inventory.ContainsKey(name)) inventory[name] = 0;
+            inventory[name] += count;
+            RefreshInventory();
+        }
+
+        private void listInventory_DrawItem(object? sender, DrawItemEventArgs e)
+        {
+            if (e.Index < 0) return;
+            e.DrawBackground();
+            var item = listInventory.Items[e.Index]?.ToString() ?? string.Empty;
+            var name = item.Split(':')[0].Trim();
+            bool known = recipes.Any(r => r.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            Color textColor = (e.State & DrawItemState.Selected) == DrawItemState.Selected
+                ? SystemColors.HighlightText
+                : (known ? listInventory.ForeColor : Color.Orange);
+            TextRenderer.DrawText(e.Graphics, item, e.Font, e.Bounds, textColor, TextFormatFlags.Left);
+            e.DrawFocusRectangle();
         }
 
         private void SetupIngredientControls()
