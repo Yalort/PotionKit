@@ -203,7 +203,12 @@ namespace PotionApp
             else if (ctrl) delta *= 10;
             else if (shift) delta *= 5;
             if (sender is Button btn && btn == btnWaterPlus)
-                waterCapacity = Math.Min(1000000, waterCapacity + delta);
+            {
+                if (waterCapacity > int.MaxValue - delta)
+                    waterCapacity = int.MaxValue;
+                else
+                    waterCapacity += delta;
+            }
             else
                 waterCapacity = Math.Max(1, waterCapacity - delta);
             waterAmount = Math.Min(waterAmount, waterCapacity);
@@ -456,7 +461,7 @@ namespace PotionApp
                 tabBrew.Controls.Add(btnMinus);
 
                 nums[i].Location = new System.Drawing.Point(x + 24, y + 20);
-                nums[i].Maximum = 1000000;
+                nums[i].Maximum = decimal.MaxValue;
                 nums[i].Size = new System.Drawing.Size(60, 23);
                 nums[i].ValueChanged += (s, e) => RefreshTotals();
                 tabBrew.Controls.Add(nums[i]);
@@ -582,8 +587,9 @@ namespace PotionApp
 
         private void UpdateWaterUI()
         {
-            barWater.Maximum = waterCapacity;
-            barWater.Value = Math.Max(0, Math.Min(waterCapacity, waterAmount));
+            int barMax = Math.Min(waterCapacity, int.MaxValue);
+            barWater.Maximum = barMax;
+            barWater.Value = Math.Max(0, Math.Min(barMax, waterAmount));
             lblWater.Text = $"Water: {waterAmount}/{waterCapacity} mL";
         }
 
