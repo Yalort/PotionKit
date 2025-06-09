@@ -13,11 +13,13 @@ namespace PotionApp
         private System.Windows.Forms.ListBox listBrewRecipes;
         private System.Windows.Forms.ListBox listQueue;
         private System.Windows.Forms.Button btnBrew;
+        private System.Windows.Forms.Button btnClearQueue;
         private System.Windows.Forms.ListBox listInventory;
         private System.Windows.Forms.TextBox txtInventoryName;
         private System.Windows.Forms.NumericUpDown numInventoryCount;
         private System.Windows.Forms.Button btnInventoryAdd;
         private System.Windows.Forms.ComboBox cmbRecipeFilter;
+        private System.Windows.Forms.ComboBox cmbBrewFilter;
         private System.Windows.Forms.ComboBox cmbInventoryFilter;
         private System.Windows.Forms.NumericUpDown numAnimal;
         private System.Windows.Forms.NumericUpDown numBerry;
@@ -66,7 +68,9 @@ namespace PotionApp
             btnInventoryAdd = new System.Windows.Forms.Button();
             btnAdd = new System.Windows.Forms.Button();
             btnBrew = new System.Windows.Forms.Button();
+            btnClearQueue = new System.Windows.Forms.Button();
             cmbRecipeFilter = new System.Windows.Forms.ComboBox();
+            cmbBrewFilter = new System.Windows.Forms.ComboBox();
             cmbInventoryFilter = new System.Windows.Forms.ComboBox();
             listBrewRecipes = new System.Windows.Forms.ListBox();
             numAnimal = new System.Windows.Forms.NumericUpDown();
@@ -172,9 +176,11 @@ namespace PotionApp
             // tabBrew
             //
             tabBrew.Controls.Add(listBrewRecipes);
+            tabBrew.Controls.Add(cmbBrewFilter);
             tabBrew.Controls.Add(lblQueueColumns);
             tabBrew.Controls.Add(listQueue);
             tabBrew.Controls.Add(btnBrew);
+            tabBrew.Controls.Add(btnClearQueue);
             tabBrew.Controls.Add(rtbTotals);
             tabBrew.Controls.Add(numAnimal);
             tabBrew.Controls.Add(numBerry);
@@ -211,7 +217,14 @@ namespace PotionApp
             listBrewRecipes.Font = new System.Drawing.Font("Consolas", 9F);
             listBrewRecipes.DoubleClick += listBrewRecipes_DoubleClick;
             //
+            // cmbBrewFilter
             //
+            cmbBrewFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cmbBrewFilter.Location = new System.Drawing.Point(412, 6);
+            cmbBrewFilter.Name = "cmbBrewFilter";
+            cmbBrewFilter.Size = new System.Drawing.Size(150, 23);
+            //
+            // listQueue
             // listQueue
             //
             listQueue.FormattingEnabled = true;
@@ -239,6 +252,15 @@ namespace PotionApp
             btnBrew.Text = "Brew All";
             btnBrew.UseVisualStyleBackColor = true;
             btnBrew.Click += btnBrew_Click;
+            //
+            // btnClearQueue
+            //
+            btnClearQueue.Location = new System.Drawing.Point(973, 199);
+            btnClearQueue.Name = "btnClearQueue";
+            btnClearQueue.Size = new System.Drawing.Size(75, 23);
+            btnClearQueue.Text = "Clear";
+            btnClearQueue.UseVisualStyleBackColor = true;
+            btnClearQueue.Click += btnClearQueue_Click;
             //
             // rtbTotals
             //

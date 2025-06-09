@@ -19,6 +19,7 @@ namespace PotionApp
         private NumericUpDown[] ingredientControls = Array.Empty<NumericUpDown>();
         private readonly ContextMenuStrip inventoryMenu = new();
         private readonly ContextMenuStrip recipeMenu = new();
+        private readonly ContextMenuStrip brewMenu = new();
 
         // Horizontal offset used when laying out controls on the Brewing tab
         // Moved left slightly so controls do not overlap the water UI
@@ -49,10 +50,15 @@ namespace PotionApp
             recipeMenu.Items.Add("Set Category", null, recipeSetCategory_Click);
             listRecipes.ContextMenuStrip = recipeMenu;
             listRecipes.MouseDown += listRecipes_MouseDown;
+
+            brewMenu.Items.Add("Add Amount", null, brewAddAmount_Click);
+            listBrewRecipes.ContextMenuStrip = brewMenu;
+            listBrewRecipes.MouseDown += listBrewRecipes_MouseDown;
             SetupIngredientControls();
             lblRecipeColumns.Text = Recipe.Header;
             lblQueueColumns.Text = Recipe.Header;
             cmbRecipeFilter.SelectedIndexChanged += (s, e) => RefreshRecipes();
+            cmbBrewFilter.SelectedIndexChanged += (s, e) => RefreshRecipes();
             cmbInventoryFilter.SelectedIndexChanged += (s, e) => RefreshInventory();
             LoadData();
             RefreshAll();
@@ -149,6 +155,12 @@ namespace PotionApp
             RefreshInventory();
             RefreshTotals();
             UpdateWaterUI();
+        }
+
+        private void btnClearQueue_Click(object? sender, EventArgs e)
+        {
+            brewQueue.Clear();
+            RefreshQueue();
         }
 
         private string? GetBrewError(Recipe rec)
@@ -284,6 +296,15 @@ namespace PotionApp
             }
         }
 
+        private void listBrewRecipes_MouseDown(object? sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                int index = listBrewRecipes.IndexFromPoint(e.Location);
+                if (index >= 0) listBrewRecipes.SelectedIndex = index;
+            }
+        }
+
         private void inventoryAddRecipe_Click(object? sender, EventArgs e)
         {
             if (listInventory.SelectedItem is not string item) return;
@@ -352,6 +373,22 @@ namespace PotionApp
             else
             {
                 MessageBox.Show($"No recipe found for {name}", "Add To Queue", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void brewAddAmount_Click(object? sender, EventArgs e)
+        {
+            if (listBrewRecipes.SelectedItem is not Recipe rec) return;
+            var input = SimplePrompt.ShowDialog("Enter amount to add:", "Add To Queue", "1");
+            if (input == null) return;
+            if (int.TryParse(input, out int count) && count > 0)
+            {
+                for (int i = 0; i < count; i++) brewQueue.Enqueue(rec);
+                RefreshQueue();
+            }
+            else
+            {
+                MessageBox.Show("Invalid number", "Add To Queue", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -440,13 +477,19 @@ namespace PotionApp
         {
             listRecipes.DataSource = null;
             listBrewRecipes.DataSource = null;
-            var filter = cmbRecipeFilter.SelectedItem as string;
-            IEnumerable<Recipe> list = recipes;
-            if (!string.IsNullOrEmpty(filter) && filter != "All")
-                list = recipes.Where(r => r.Category.Equals(filter, StringComparison.OrdinalIgnoreCase));
-            var arr = list.ToList();
-            listRecipes.DataSource = arr;
-            listBrewRecipes.DataSource = arr;
+            var filterR = cmbRecipeFilter.SelectedItem as string;
+            var filterB = cmbBrewFilter.SelectedItem as string;
+
+            IEnumerable<Recipe> listR = recipes;
+            if (!string.IsNullOrEmpty(filterR) && filterR != "All")
+                listR = listR.Where(r => r.Category.Equals(filterR, StringComparison.OrdinalIgnoreCase));
+
+            IEnumerable<Recipe> listB = recipes;
+            if (!string.IsNullOrEmpty(filterB) && filterB != "All")
+                listB = listB.Where(r => r.Category.Equals(filterB, StringComparison.OrdinalIgnoreCase));
+
+            listRecipes.DataSource = listR.ToList();
+            listBrewRecipes.DataSource = listB.ToList();
         }
 
         private void RefreshQueue()
@@ -666,10 +709,13 @@ namespace PotionApp
             var list = new List<string> { "All" };
             list.AddRange(categories.OrderBy(c => c, StringComparer.OrdinalIgnoreCase));
             var selR = cmbRecipeFilter.SelectedItem as string;
+            var selB = cmbBrewFilter.SelectedItem as string;
             var selI = cmbInventoryFilter.SelectedItem as string;
             cmbRecipeFilter.DataSource = list.ToList();
+            cmbBrewFilter.DataSource = list.ToList();
             cmbInventoryFilter.DataSource = list.ToList();
             if (selR != null && list.Contains(selR)) cmbRecipeFilter.SelectedItem = selR;
+            if (selB != null && list.Contains(selB)) cmbBrewFilter.SelectedItem = selB;
             if (selI != null && list.Contains(selI)) cmbInventoryFilter.SelectedItem = selI;
         }
 
