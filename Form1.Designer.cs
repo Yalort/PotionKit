@@ -71,6 +71,8 @@ namespace PotionApp
             numBottles = new System.Windows.Forms.NumericUpDown();
             barWater = new System.Windows.Forms.ProgressBar();
             lblWater = new System.Windows.Forms.Label();
+            lblRecipeColumns = new System.Windows.Forms.Label();
+            lblQueueColumns = new System.Windows.Forms.Label();
             btnWaterPlus = new System.Windows.Forms.Button();
             btnWaterMinus = new System.Windows.Forms.Button();
             btnFillWater = new System.Windows.Forms.Button();
