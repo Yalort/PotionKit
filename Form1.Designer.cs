@@ -11,6 +11,7 @@ namespace PotionApp
         private System.Windows.Forms.ListBox listRecipes;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.ListBox listBrewRecipes;
+        private System.Windows.Forms.Button btnAddQueue;
         private System.Windows.Forms.ListBox listQueue;
         private System.Windows.Forms.Button btnBrew;
         private System.Windows.Forms.Button btnClearQueue;
@@ -68,6 +69,7 @@ namespace PotionApp
             btnInventoryAdd = new System.Windows.Forms.Button();
             btnAdd = new System.Windows.Forms.Button();
             btnBrew = new System.Windows.Forms.Button();
+            btnAddQueue = new System.Windows.Forms.Button();
             btnClearQueue = new System.Windows.Forms.Button();
             cmbRecipeFilter = new System.Windows.Forms.ComboBox();
             cmbBrewFilter = new System.Windows.Forms.ComboBox();
@@ -177,6 +179,7 @@ namespace PotionApp
             //
             tabBrew.Controls.Add(listBrewRecipes);
             tabBrew.Controls.Add(cmbBrewFilter);
+            tabBrew.Controls.Add(btnAddQueue);
             tabBrew.Controls.Add(lblQueueColumns);
             tabBrew.Controls.Add(listQueue);
             tabBrew.Controls.Add(btnBrew);
@@ -223,6 +226,15 @@ namespace PotionApp
             cmbBrewFilter.Location = new System.Drawing.Point(412, 6);
             cmbBrewFilter.Name = "cmbBrewFilter";
             cmbBrewFilter.Size = new System.Drawing.Size(150, 23);
+            //
+            // btnAddQueue
+            //
+            btnAddQueue.Location = new System.Drawing.Point(612, 130);
+            btnAddQueue.Name = "btnAddQueue";
+            btnAddQueue.Size = new System.Drawing.Size(75, 23);
+            btnAddQueue.Text = "Add";
+            btnAddQueue.UseVisualStyleBackColor = true;
+            btnAddQueue.Click += btnAddQueue_Click;
             //
             // listQueue
             // listQueue
