@@ -225,7 +225,7 @@ namespace PotionApp
             cmbBrewFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cmbBrewFilter.Location = new System.Drawing.Point(412, 6);
             cmbBrewFilter.Name = "cmbBrewFilter";
-            cmbBrewFilter.Size = new System.Drawing.Size(150, 23);
+            cmbBrewFilter.Size = new System.Drawing.Size(90, 23);
             //
             // btnAddQueue
             //
@@ -269,7 +269,7 @@ namespace PotionApp
             //
             btnClearQueue.Location = new System.Drawing.Point(973, 199);
             btnClearQueue.Name = "btnClearQueue";
-            btnClearQueue.Size = new System.Drawing.Size(75, 23);
+            btnClearQueue.Size = new System.Drawing.Size(70, 23);
             btnClearQueue.Text = "Clear";
             btnClearQueue.UseVisualStyleBackColor = true;
             btnClearQueue.Click += btnClearQueue_Click;
@@ -293,10 +293,10 @@ namespace PotionApp
             //
             // barWater
             //
-            barWater.Location = new System.Drawing.Point(1040, 24);
+            barWater.Location = new System.Drawing.Point(1050, 24);
             barWater.Maximum = 1000;
             barWater.Name = "barWater";
-            barWater.Size = new System.Drawing.Size(23, 150);
+            barWater.Size = new System.Drawing.Size(15, 415);
             barWater.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             barWater.ForeColor = System.Drawing.Color.Blue;
             //
@@ -319,25 +319,25 @@ namespace PotionApp
             //
             // btnWaterPlus
             //
-            btnWaterPlus.Location = new System.Drawing.Point(1069, 24);
+            btnWaterPlus.Location = new System.Drawing.Point(1090, 24);
             btnWaterPlus.Name = "btnWaterPlus";
-            btnWaterPlus.Size = new System.Drawing.Size(23, 23);
+            btnWaterPlus.Size = new System.Drawing.Size(46, 23);
             btnWaterPlus.Text = "+M";
             btnWaterPlus.UseVisualStyleBackColor = true;
             btnWaterPlus.Click += adjustWater_Click;
             //
             // btnWaterMinus
             //
-            btnWaterMinus.Location = new System.Drawing.Point(1069, 53);
+            btnWaterMinus.Location = new System.Drawing.Point(1090, 53);
             btnWaterMinus.Name = "btnWaterMinus";
-            btnWaterMinus.Size = new System.Drawing.Size(23, 23);
+            btnWaterMinus.Size = new System.Drawing.Size(46, 23);
             btnWaterMinus.Text = "-M";
             btnWaterMinus.UseVisualStyleBackColor = true;
             btnWaterMinus.Click += adjustWater_Click;
             //
             // btnFillWater
             //
-            btnFillWater.Location = new System.Drawing.Point(1069, 82);
+            btnFillWater.Location = new System.Drawing.Point(1066, 82);
             btnFillWater.Name = "btnFillWater";
             btnFillWater.Size = new System.Drawing.Size(92, 23);
             btnFillWater.Text = "Fill";
@@ -346,7 +346,7 @@ namespace PotionApp
             //
             // btnWaterAmountPlus
             //
-            btnWaterAmountPlus.Location = new System.Drawing.Point(1098, 24);
+            btnWaterAmountPlus.Location = new System.Drawing.Point(1066, 24);
             btnWaterAmountPlus.Name = "btnWaterAmountPlus";
             btnWaterAmountPlus.Size = new System.Drawing.Size(23, 23);
             btnWaterAmountPlus.Text = "+";
@@ -355,7 +355,7 @@ namespace PotionApp
             //
             // btnWaterAmountMinus
             //
-            btnWaterAmountMinus.Location = new System.Drawing.Point(1098, 53);
+            btnWaterAmountMinus.Location = new System.Drawing.Point(1066, 53);
             btnWaterAmountMinus.Name = "btnWaterAmountMinus";
             btnWaterAmountMinus.Size = new System.Drawing.Size(23, 23);
             btnWaterAmountMinus.Text = "-";
