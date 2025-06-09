@@ -14,6 +14,9 @@ namespace PotionApp
         private System.Windows.Forms.ListBox listQueue;
         private System.Windows.Forms.Button btnBrew;
         private System.Windows.Forms.ListBox listInventory;
+        private System.Windows.Forms.TextBox txtInventoryName;
+        private System.Windows.Forms.NumericUpDown numInventoryCount;
+        private System.Windows.Forms.Button btnInventoryAdd;
         private System.Windows.Forms.NumericUpDown numAnimal;
         private System.Windows.Forms.NumericUpDown numBerry;
         private System.Windows.Forms.NumericUpDown numFungi;
@@ -44,6 +47,9 @@ namespace PotionApp
             listRecipes = new System.Windows.Forms.ListBox();
             listQueue = new System.Windows.Forms.ListBox();
             listInventory = new System.Windows.Forms.ListBox();
+            txtInventoryName = new System.Windows.Forms.TextBox();
+            numInventoryCount = new System.Windows.Forms.NumericUpDown();
+            btnInventoryAdd = new System.Windows.Forms.Button();
             btnAdd = new System.Windows.Forms.Button();
             btnAddQueue = new System.Windows.Forms.Button();
             btnBrew = new System.Windows.Forms.Button();
@@ -69,6 +75,7 @@ namespace PotionApp
             ((System.ComponentModel.ISupportInitialize)(numMineral)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(numRoot)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(numSolution)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(numInventoryCount)).BeginInit();
             SuspendLayout();
             //
             // tabControl1
@@ -195,6 +202,9 @@ namespace PotionApp
             // tabInventory
             //
             tabInventory.Controls.Add(listInventory);
+            tabInventory.Controls.Add(txtInventoryName);
+            tabInventory.Controls.Add(numInventoryCount);
+            tabInventory.Controls.Add(btnInventoryAdd);
             tabInventory.Location = new System.Drawing.Point(4, 24);
             tabInventory.Name = "tabInventory";
             tabInventory.Padding = new System.Windows.Forms.Padding(3);
@@ -209,7 +219,33 @@ namespace PotionApp
             listInventory.Location = new System.Drawing.Point(6, 6);
             listInventory.Name = "listInventory";
             listInventory.Size = new System.Drawing.Size(400, 319);
+            listInventory.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            listInventory.DrawItem += listInventory_DrawItem;
             listInventory.DoubleClick += listInventory_DoubleClick;
+            //
+            // txtInventoryName
+            //
+            txtInventoryName.Location = new System.Drawing.Point(412, 6);
+            txtInventoryName.Name = "txtInventoryName";
+            txtInventoryName.Size = new System.Drawing.Size(150, 23);
+            //
+            // numInventoryCount
+            //
+            numInventoryCount.Location = new System.Drawing.Point(412, 35);
+            numInventoryCount.Maximum = 1000;
+            numInventoryCount.Minimum = 1;
+            numInventoryCount.Name = "numInventoryCount";
+            numInventoryCount.Size = new System.Drawing.Size(60, 23);
+            numInventoryCount.Value = 1;
+            //
+            // btnInventoryAdd
+            //
+            btnInventoryAdd.Location = new System.Drawing.Point(478, 34);
+            btnInventoryAdd.Name = "btnInventoryAdd";
+            btnInventoryAdd.Size = new System.Drawing.Size(84, 23);
+            btnInventoryAdd.Text = "Add";
+            btnInventoryAdd.UseVisualStyleBackColor = true;
+            btnInventoryAdd.Click += btnInventoryAdd_Click;
             //
             // Form1
             //
@@ -231,6 +267,7 @@ namespace PotionApp
             ((System.ComponentModel.ISupportInitialize)(numMineral)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(numRoot)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(numSolution)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(numInventoryCount)).EndInit();
             ResumeLayout(false);
         }
     }
