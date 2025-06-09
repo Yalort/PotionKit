@@ -17,6 +17,7 @@ namespace PotionApp
         private NumericUpDown[] ingredientControls = Array.Empty<NumericUpDown>();
         private readonly ContextMenuStrip inventoryMenu = new();
 
+        private int waterCapacity = 1000;
         private int waterAmount = 1000;
 
         private readonly string dataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "potionkit2");
@@ -161,7 +162,24 @@ namespace PotionApp
             else if (ctrl) delta *= 10;
             else if (shift) delta *= 5;
             if (sender is Button btn && btn == btnWaterPlus)
-                waterAmount = Math.Min(1000, waterAmount + delta);
+                waterCapacity = Math.Min(1000000, waterCapacity + delta);
+            else
+                waterCapacity = Math.Max(1, waterCapacity - delta);
+            waterAmount = Math.Min(waterAmount, waterCapacity);
+            UpdateWaterUI();
+            RefreshTotals();
+        }
+
+        private void adjustWaterAmount_Click(object sender, EventArgs e)
+        {
+            bool shift = ModifierKeys.HasFlag(Keys.Shift);
+            bool ctrl = ModifierKeys.HasFlag(Keys.Control);
+            int delta = 1;
+            if (shift && ctrl) delta = 100;
+            else if (ctrl) delta = 10;
+            else if (shift) delta = 5;
+            if (sender is Button btn && btn == btnWaterAmountPlus)
+                waterAmount = Math.Min(waterCapacity, waterAmount + delta);
             else
                 waterAmount = Math.Max(0, waterAmount - delta);
             UpdateWaterUI();
@@ -170,7 +188,7 @@ namespace PotionApp
 
         private void btnFillWater_Click(object sender, EventArgs e)
         {
-            waterAmount = 1000;
+            waterAmount = waterCapacity;
             UpdateWaterUI();
             RefreshTotals();
         }
@@ -384,8 +402,9 @@ namespace PotionApp
 
         private void UpdateWaterUI()
         {
-            barWater.Value = Math.Max(0, Math.Min(1000, waterAmount));
-            lblWater.Text = $"Water: {waterAmount} mL";
+            barWater.Maximum = waterCapacity;
+            barWater.Value = Math.Max(0, Math.Min(waterCapacity, waterAmount));
+            lblWater.Text = $"Water: {waterAmount}/{waterCapacity} mL";
         }
 
         private void LoadData()
@@ -430,7 +449,10 @@ namespace PotionApp
                         if (dict.TryGetValue("Root", out var r)) numRoot.Value = r;
                         if (dict.TryGetValue("Solution", out var s)) numSolution.Value = s;
                         if (dict.TryGetValue("Bottles", out var bo)) numBottles.Value = bo;
-                        if (dict.TryGetValue("Water", out var w)) waterAmount = Math.Max(0, Math.Min(1000, w));
+                        if (dict.TryGetValue("WaterCapacity", out var cap))
+                            waterCapacity = Math.Max(1, cap);
+                        if (dict.TryGetValue("Water", out var w))
+                            waterAmount = Math.Max(0, Math.Min(waterCapacity, w));
                     }
                 }
                 UpdateWaterUI();
@@ -457,7 +479,8 @@ namespace PotionApp
                     ["Root"] = (int)numRoot.Value,
                     ["Solution"] = (int)numSolution.Value,
                     ["Bottles"] = (int)numBottles.Value,
-                    ["Water"] = waterAmount
+                    ["Water"] = waterAmount,
+                    ["WaterCapacity"] = waterCapacity
                 };
                 var options = new JsonSerializerOptions { WriteIndented = true };
                 File.WriteAllText(IngredientsPath, JsonSerializer.Serialize(ingredients, options));

@@ -31,6 +31,8 @@ namespace PotionApp
         private System.Windows.Forms.Label lblWater;
         private System.Windows.Forms.Label lblWaterAdjust;
         private System.Windows.Forms.NumericUpDown numWaterAdjust;
+        private System.Windows.Forms.Button btnWaterAmountPlus;
+        private System.Windows.Forms.Button btnWaterAmountMinus;
         private System.Windows.Forms.Button btnWaterPlus;
         private System.Windows.Forms.Button btnWaterMinus;
         private System.Windows.Forms.Button btnFillWater;
@@ -78,6 +80,8 @@ namespace PotionApp
             lblWater = new System.Windows.Forms.Label();
             lblWaterAdjust = new System.Windows.Forms.Label();
             numWaterAdjust = new System.Windows.Forms.NumericUpDown();
+            btnWaterAmountPlus = new System.Windows.Forms.Button();
+            btnWaterAmountMinus = new System.Windows.Forms.Button();
             txtHelp = new System.Windows.Forms.TextBox();
             lblRecipeColumns = new System.Windows.Forms.Label();
             lblQueueColumns = new System.Windows.Forms.Label();
@@ -179,6 +183,8 @@ namespace PotionApp
             tabBrew.Controls.Add(btnWaterPlus);
             tabBrew.Controls.Add(btnWaterMinus);
             tabBrew.Controls.Add(btnFillWater);
+            tabBrew.Controls.Add(btnWaterAmountPlus);
+            tabBrew.Controls.Add(btnWaterAmountMinus);
             tabBrew.Location = new System.Drawing.Point(4, 24);
             tabBrew.Name = "tabBrew";
             tabBrew.Padding = new System.Windows.Forms.Padding(3);
@@ -300,6 +306,24 @@ namespace PotionApp
             btnFillWater.UseVisualStyleBackColor = true;
             btnFillWater.Click += btnFillWater_Click;
             //
+            // btnWaterAmountPlus
+            //
+            btnWaterAmountPlus.Location = new System.Drawing.Point(698, 24);
+            btnWaterAmountPlus.Name = "btnWaterAmountPlus";
+            btnWaterAmountPlus.Size = new System.Drawing.Size(23, 23);
+            btnWaterAmountPlus.Text = "+";
+            btnWaterAmountPlus.UseVisualStyleBackColor = true;
+            btnWaterAmountPlus.Click += adjustWaterAmount_Click;
+            //
+            // btnWaterAmountMinus
+            //
+            btnWaterAmountMinus.Location = new System.Drawing.Point(698, 53);
+            btnWaterAmountMinus.Name = "btnWaterAmountMinus";
+            btnWaterAmountMinus.Size = new System.Drawing.Size(23, 23);
+            btnWaterAmountMinus.Text = "-";
+            btnWaterAmountMinus.UseVisualStyleBackColor = true;
+            btnWaterAmountMinus.Click += adjustWaterAmount_Click;
+            //
             // tabInventory
             //
             tabInventory.Controls.Add(listInventory);
@@ -367,7 +391,7 @@ namespace PotionApp
             txtHelp.ReadOnly = true;
             txtHelp.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             txtHelp.Size = new System.Drawing.Size(766, 327);
-            txtHelp.Text = "Controls:\r\n\r\nRecipes tab:\r\n - Add new recipes with the Add button.\r\n - Double-click a recipe to edit it.\r\n\r\nBrewing tab:\r\n - Choose a recipe and press Add to queue.\r\n - Double-click a queued item to remove it.\r\n - Brew All consumes ingredients and bottles.\r\n - Use the + and - buttons to adjust ingredient or water amounts. Hold Shift for \u00b15, Ctrl for \u00b110, and both for \u00b1100. Set the water amount box to choose the adjustment size.\r\n\r\nInventory tab:\r\n - Enter a name and count then click Add.\r\n - Double-click an item to consume one.\r\n - Right-click an item to create a recipe with that name.\r\n Unknown potions show in orange.";
+            txtHelp.Text = "Controls:\r\n\r\nRecipes tab:\r\n - Add new recipes with the Add button.\r\n - Double-click a recipe to edit it.\r\n\r\nBrewing tab:\r\n - Choose a recipe and press Add to queue.\r\n - Double-click a queued item to remove it.\r\n - Brew All consumes ingredients and bottles.\r\n - Use the + and - buttons next to the water bar to change the current water.\r\n - Use the + and - by the Amount box to change water capacity. Hold Shift for \u00b15, Ctrl for \u00b110, and both for \u00b1100. Set the water amount box to choose the capacity adjustment size.\r\n\r\nInventory tab:\r\n - Enter a name and count then click Add.\r\n - Double-click an item to consume one.\r\n - Right-click an item to create a recipe with that name.\r\n Unknown potions show in orange.";
             //
             // Form1
             //
