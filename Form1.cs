@@ -15,6 +15,7 @@ namespace PotionApp
         private readonly Dictionary<string, int> inventory = new();
         private readonly string[] ingredientNames = { "Animal", "Berry", "Fungi", "Herb", "Magic", "Mineral", "Root", "Solution", "Bottles" };
         private NumericUpDown[] ingredientControls = Array.Empty<NumericUpDown>();
+        private readonly ContextMenuStrip inventoryMenu = new();
 
         private int waterAmount = 1000;
 
@@ -26,6 +27,9 @@ namespace PotionApp
         public Form1()
         {
             InitializeComponent();
+            inventoryMenu.Items.Add("Add Recipe", null, inventoryAddRecipe_Click);
+            listInventory.ContextMenuStrip = inventoryMenu;
+            listInventory.MouseDown += listInventory_MouseDown;
             SetupIngredientControls();
             lblRecipeColumns.Text = Recipe.Header;
             lblQueueColumns.Text = Recipe.Header;
@@ -209,6 +213,27 @@ namespace PotionApp
                 : (known ? listInventory.ForeColor : Color.Orange);
             TextRenderer.DrawText(e.Graphics, item, e.Font, e.Bounds, textColor, TextFormatFlags.Left);
             e.DrawFocusRectangle();
+        }
+
+        private void listInventory_MouseDown(object? sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                int index = listInventory.IndexFromPoint(e.Location);
+                if (index >= 0) listInventory.SelectedIndex = index;
+            }
+        }
+
+        private void inventoryAddRecipe_Click(object? sender, EventArgs e)
+        {
+            if (listInventory.SelectedItem is not string item) return;
+            var name = item.Split(":")[0].Trim();
+            using var frm = new RecipeForm(new Recipe { Name = name });
+            if (frm.ShowDialog(this) == DialogResult.OK)
+            {
+                recipes.Add(frm.Recipe);
+                RefreshRecipes();
+            }
         }
 
         private void SetupIngredientControls()
