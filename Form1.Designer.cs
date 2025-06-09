@@ -113,7 +113,7 @@ namespace PotionApp
             tabControl1.Location = new System.Drawing.Point(0, 0);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 1;
-            tabControl1.Size = new System.Drawing.Size(780, 361);
+            tabControl1.Size = new System.Drawing.Size(780, 397);
             //
             // tabRecipes
             //
@@ -123,7 +123,7 @@ namespace PotionApp
             tabRecipes.Location = new System.Drawing.Point(4, 24);
             tabRecipes.Name = "tabRecipes";
             tabRecipes.Padding = new System.Windows.Forms.Padding(3);
-            tabRecipes.Size = new System.Drawing.Size(772, 333);
+            tabRecipes.Size = new System.Drawing.Size(772, 369);
             tabRecipes.Text = "Recipes";
             tabRecipes.UseVisualStyleBackColor = true;
             //
@@ -182,7 +182,7 @@ namespace PotionApp
             tabBrew.Location = new System.Drawing.Point(4, 24);
             tabBrew.Name = "tabBrew";
             tabBrew.Padding = new System.Windows.Forms.Padding(3);
-            tabBrew.Size = new System.Drawing.Size(772, 333);
+            tabBrew.Size = new System.Drawing.Size(772, 369);
             tabBrew.Text = "Brewing";
             tabBrew.UseVisualStyleBackColor = true;
             //
@@ -208,7 +208,7 @@ namespace PotionApp
             listQueue.ItemHeight = 15;
             listQueue.Location = new System.Drawing.Point(6, 199);
             listQueue.Name = "listQueue";
-            listQueue.Size = new System.Drawing.Size(480, 128);
+            listQueue.Size = new System.Drawing.Size(480, 164);
             listQueue.Font = new System.Drawing.Font("Consolas", 9F);
             listQueue.DoubleClick += listQueue_DoubleClick;
             //
@@ -235,7 +235,7 @@ namespace PotionApp
             rtbTotals.Location = new System.Drawing.Point(492, 228);
             rtbTotals.Name = "rtbTotals";
             rtbTotals.ReadOnly = true;
-            rtbTotals.Size = new System.Drawing.Size(150, 99);
+            rtbTotals.Size = new System.Drawing.Size(150, 135);
             rtbTotals.TabStop = false;
             rtbTotals.Font = new System.Drawing.Font("Consolas", 9F);
             //
@@ -309,7 +309,7 @@ namespace PotionApp
             tabInventory.Location = new System.Drawing.Point(4, 24);
             tabInventory.Name = "tabInventory";
             tabInventory.Padding = new System.Windows.Forms.Padding(3);
-            tabInventory.Size = new System.Drawing.Size(772, 333);
+            tabInventory.Size = new System.Drawing.Size(772, 369);
             tabInventory.Text = "Inventory";
             tabInventory.UseVisualStyleBackColor = true;
             //
@@ -354,7 +354,7 @@ namespace PotionApp
             tabHelp.Location = new System.Drawing.Point(4, 24);
             tabHelp.Name = "tabHelp";
             tabHelp.Padding = new System.Windows.Forms.Padding(3);
-            tabHelp.Size = new System.Drawing.Size(772, 333);
+            tabHelp.Size = new System.Drawing.Size(772, 369);
             tabHelp.Text = "Help";
             tabHelp.UseVisualStyleBackColor = true;
             //
@@ -366,6 +366,8 @@ namespace PotionApp
             txtHelp.Name = "txtHelp";
             txtHelp.ReadOnly = true;
             txtHelp.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            txtHelp.Size = new System.Drawing.Size(766, 363);
+            txtHelp.Text = "Controls:\r\n\r\nRecipes tab:\r\n - Add new recipes with the Add button.\r\n - Double-click a recipe to edit it.\r\n\r\nBrewing tab:\r\n - Choose a recipe and press Add to queue.\r\n - Double-click a queued item to remove it.\r\n - Brew All consumes ingredients and bottles.\r\n - Use the + and - buttons to adjust ingredient or water amounts. Hold Shift for \u00b15, Ctrl for \u00b110, and both for \u00b1100.\r\n\r\nInventory tab:\r\n - Enter a name and count then click Add.\r\n - Double-click an item to consume one.\r\n - Right-click an item to create a recipe with that name.\r\n Unknown potions show in orange.";
             txtHelp.Size = new System.Drawing.Size(766, 327);
             txtHelp.Text = "Controls:\r\n\r\nRecipes tab:\r\n - Add new recipes with the Add button.\r\n - Double-click a recipe to edit it.\r\n\r\nBrewing tab:\r\n - Choose a recipe and press Add to queue.\r\n - Double-click a queued item to remove it.\r\n - Brew All consumes ingredients and bottles.\r\n - Use the + and - buttons to adjust ingredient or water amounts. Hold Shift for \u00b15, Ctrl for \u00b110, and both for \u00b1100. Set the water amount box to choose the adjustment size.\r\n\r\nInventory tab:\r\n - Enter a name and count then click Add.\r\n - Double-click an item to consume one.\r\n - Right-click an item to create a recipe with that name.\r\n Unknown potions show in orange.";
             //
@@ -373,7 +375,7 @@ namespace PotionApp
             //
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(780, 361);
+            ClientSize = new System.Drawing.Size(780, 397);
             Controls.Add(tabControl1);
             Name = "Form1";
             Text = "Potion Manager";
