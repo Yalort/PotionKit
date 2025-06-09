@@ -23,6 +23,8 @@ namespace PotionApp
         private System.Windows.Forms.NumericUpDown numRoot;
         private System.Windows.Forms.NumericUpDown numSolution;
         private System.Windows.Forms.RichTextBox rtbTotals;
+        private System.Windows.Forms.Label lblRecipeColumns;
+        private System.Windows.Forms.Label lblQueueColumns;
 
         protected override void Dispose(bool disposing)
         {
@@ -82,6 +84,7 @@ namespace PotionApp
             //
             // tabRecipes
             //
+            tabRecipes.Controls.Add(lblRecipeColumns);
             tabRecipes.Controls.Add(listRecipes);
             tabRecipes.Controls.Add(btnAdd);
             tabRecipes.Location = new System.Drawing.Point(4, 24);
@@ -95,10 +98,18 @@ namespace PotionApp
             //
             listRecipes.FormattingEnabled = true;
             listRecipes.ItemHeight = 15;
-            listRecipes.Location = new System.Drawing.Point(6, 6);
+            listRecipes.Location = new System.Drawing.Point(6, 26);
             listRecipes.Name = "listRecipes";
-            listRecipes.Size = new System.Drawing.Size(400, 319);
+            listRecipes.Size = new System.Drawing.Size(400, 299);
             listRecipes.DoubleClick += listRecipes_DoubleClick;
+            //
+            // lblRecipeColumns
+            //
+            lblRecipeColumns.AutoSize = true;
+            lblRecipeColumns.Location = new System.Drawing.Point(6, 6);
+            lblRecipeColumns.Name = "lblRecipeColumns";
+            lblRecipeColumns.Size = new System.Drawing.Size(0, 15);
+            lblRecipeColumns.TabIndex = 3;
             //
             // btnAdd
             //
@@ -113,6 +124,7 @@ namespace PotionApp
             //
             tabBrew.Controls.Add(comboRecipes);
             tabBrew.Controls.Add(btnAddQueue);
+            tabBrew.Controls.Add(lblQueueColumns);
             tabBrew.Controls.Add(listQueue);
             tabBrew.Controls.Add(btnBrew);
             tabBrew.Controls.Add(rtbTotals);
@@ -154,6 +166,14 @@ namespace PotionApp
             listQueue.Location = new System.Drawing.Point(6, 199);
             listQueue.Name = "listQueue";
             listQueue.Size = new System.Drawing.Size(400, 128);
+            //
+            // lblQueueColumns
+            //
+            lblQueueColumns.AutoSize = true;
+            lblQueueColumns.Location = new System.Drawing.Point(6, 180);
+            lblQueueColumns.Name = "lblQueueColumns";
+            lblQueueColumns.Size = new System.Drawing.Size(0, 15);
+            lblQueueColumns.TabIndex = 9;
             //
             // btnBrew
             //
