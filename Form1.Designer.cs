@@ -75,7 +75,7 @@ namespace PotionApp
             tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             tabControl1.Location = new System.Drawing.Point(0, 0);
             tabControl1.Name = "tabControl1";
-            tabControl1.SelectedIndex = 0;
+            tabControl1.SelectedIndex = 1;
             tabControl1.Size = new System.Drawing.Size(584, 361);
             //
             // tabRecipes
