@@ -10,4 +10,5 @@ PotionApp is a simple Windows Forms application for managing potion recipes and 
 - Totals panel shows how many ingredients are needed and highlights shortages.
 - Column headers now label each ingredient in the recipe and queue lists.
 - Special ingredients are summarized in the totals panel.
+- Help tab explains the controls.
 
