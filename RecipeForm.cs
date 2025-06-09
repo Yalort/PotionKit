@@ -10,6 +10,7 @@ namespace PotionApp
         public RecipeForm(Recipe? recipe = null)
         {
             InitializeComponent();
+            SetupNumericControls();
             if (recipe != null)
             {
                 Recipe = recipe;
@@ -42,6 +43,32 @@ namespace PotionApp
             Recipe.Solution = (int)numSolution.Value;
             DialogResult = DialogResult.OK;
             Close();
+        }
+
+        private void SetupNumericControls()
+        {
+            int top = 50;
+            NumericUpDown[] nums = { numAnimal, numBerry, numFungi, numHerb, numMagic, numMineral, numRoot, numSolution };
+            string[] labels = { "Animal", "Berry", "Fungi", "Herb", "Magic", "Mineral", "Root", "Solution" };
+            for (int i = 0; i < nums.Length; i++)
+            {
+                Label lbl = new Label
+                {
+                    Text = labels[i],
+                    Location = new System.Drawing.Point(12, top + i * 30),
+                    AutoSize = true
+                };
+                Controls.Add(lbl);
+
+                nums[i].Location = new System.Drawing.Point(80, top + i * 30 - 3);
+                nums[i].Name = "num" + labels[i];
+                nums[i].Maximum = 1000;
+                Controls.Add(nums[i]);
+            }
+
+            btnOk.Location = new System.Drawing.Point(56, top + nums.Length * 30);
+            btnCancel.Location = new System.Drawing.Point(137, top + nums.Length * 30);
+            ClientSize = new System.Drawing.Size(224, top + nums.Length * 30 + 40);
         }
     }
 }
