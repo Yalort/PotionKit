@@ -11,6 +11,8 @@ namespace PotionApp
         private readonly List<Recipe> recipes = new();
         private readonly Queue<Recipe> brewQueue = new();
         private readonly Dictionary<string, int> inventory = new();
+        private readonly string[] ingredientNames = { "Animal", "Berry", "Fungi", "Herb", "Magic", "Mineral", "Root", "Solution" };
+        private NumericUpDown[] ingredientControls = Array.Empty<NumericUpDown>();
 
         private readonly string dataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "potionkit2");
         private string IngredientsPath => Path.Combine(dataDir, "ingredients.json");
@@ -60,11 +62,23 @@ namespace PotionApp
         private void btnBrew_Click(object sender, EventArgs e)
         {
             if (brewQueue.Count == 0) return;
-            var rec = brewQueue.Dequeue();
-            if (!inventory.ContainsKey(rec.Name)) inventory[rec.Name] = 0;
-            inventory[rec.Name]++;
+            while (brewQueue.Count > 0)
+            {
+                var rec = brewQueue.Dequeue();
+                if (!inventory.ContainsKey(rec.Name)) inventory[rec.Name] = 0;
+                inventory[rec.Name]++;
+                ingredientControls[0].Value = Math.Max(0, ingredientControls[0].Value - rec.Animal);
+                ingredientControls[1].Value = Math.Max(0, ingredientControls[1].Value - rec.Berry);
+                ingredientControls[2].Value = Math.Max(0, ingredientControls[2].Value - rec.Fungi);
+                ingredientControls[3].Value = Math.Max(0, ingredientControls[3].Value - rec.Herb);
+                ingredientControls[4].Value = Math.Max(0, ingredientControls[4].Value - rec.Magic);
+                ingredientControls[5].Value = Math.Max(0, ingredientControls[5].Value - rec.Mineral);
+                ingredientControls[6].Value = Math.Max(0, ingredientControls[6].Value - rec.Root);
+                ingredientControls[7].Value = Math.Max(0, ingredientControls[7].Value - rec.Solution);
+            }
             RefreshQueue();
             RefreshInventory();
+            RefreshTotals();
         }
 
         private void adjustAmount_Click(object sender, EventArgs e)
@@ -101,7 +115,8 @@ namespace PotionApp
         private void SetupIngredientControls()
         {
             NumericUpDown[] nums = { numAnimal, numBerry, numFungi, numHerb, numMagic, numMineral, numRoot, numSolution };
-            string[] labels = { "Animal", "Berry", "Fungi", "Herb", "Magic", "Mineral", "Root", "Solution" };
+            ingredientControls = nums;
+            string[] labels = ingredientNames;
             for (int i = 0; i < nums.Length; i++)
             {
                 int row = i / 4;
@@ -130,6 +145,7 @@ namespace PotionApp
                 nums[i].Location = new System.Drawing.Point(x + 24, y + 20);
                 nums[i].Maximum = 1000000;
                 nums[i].Size = new System.Drawing.Size(60, 23);
+                nums[i].ValueChanged += (s, e) => RefreshTotals();
                 tabBrew.Controls.Add(nums[i]);
 
                 Button btnPlus = new Button
@@ -156,6 +172,7 @@ namespace PotionApp
         {
             listQueue.DataSource = null;
             listQueue.DataSource = brewQueue.ToArray();
+            RefreshTotals();
         }
 
         private void RefreshInventory()
@@ -174,6 +191,37 @@ namespace PotionApp
             RefreshRecipes();
             RefreshQueue();
             RefreshInventory();
+            RefreshTotals();
+        }
+
+        private void RefreshTotals()
+        {
+            if (ingredientControls.Length == 0) return;
+            int[] totals = new int[ingredientControls.Length];
+            foreach (var r in brewQueue)
+            {
+                totals[0] += r.Animal;
+                totals[1] += r.Berry;
+                totals[2] += r.Fungi;
+                totals[3] += r.Herb;
+                totals[4] += r.Magic;
+                totals[5] += r.Mineral;
+                totals[6] += r.Root;
+                totals[7] += r.Solution;
+            }
+
+            rtbTotals.Clear();
+            for (int i = 0; i < totals.Length; i++)
+            {
+                int remaining = (int)ingredientControls[i].Value - totals[i];
+                rtbTotals.SelectionColor = System.Drawing.Color.Black;
+                rtbTotals.AppendText($"{ingredientNames[i]}: {totals[i]} (");
+                if (remaining < 0)
+                    rtbTotals.SelectionColor = System.Drawing.Color.Red;
+                rtbTotals.AppendText(remaining.ToString());
+                rtbTotals.SelectionColor = System.Drawing.Color.Black;
+                rtbTotals.AppendText(")\n");
+            }
         }
 
         private void LoadData()

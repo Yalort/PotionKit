@@ -22,6 +22,7 @@ namespace PotionApp
         private System.Windows.Forms.NumericUpDown numMineral;
         private System.Windows.Forms.NumericUpDown numRoot;
         private System.Windows.Forms.NumericUpDown numSolution;
+        private System.Windows.Forms.RichTextBox rtbTotals;
 
         protected override void Dispose(bool disposing)
         {
@@ -53,6 +54,7 @@ namespace PotionApp
             numMineral = new System.Windows.Forms.NumericUpDown();
             numRoot = new System.Windows.Forms.NumericUpDown();
             numSolution = new System.Windows.Forms.NumericUpDown();
+            rtbTotals = new System.Windows.Forms.RichTextBox();
             tabControl1.SuspendLayout();
             tabRecipes.SuspendLayout();
             tabBrew.SuspendLayout();
@@ -113,6 +115,7 @@ namespace PotionApp
             tabBrew.Controls.Add(btnAddQueue);
             tabBrew.Controls.Add(listQueue);
             tabBrew.Controls.Add(btnBrew);
+            tabBrew.Controls.Add(rtbTotals);
             tabBrew.Controls.Add(numAnimal);
             tabBrew.Controls.Add(numBerry);
             tabBrew.Controls.Add(numFungi);
@@ -157,9 +160,17 @@ namespace PotionApp
             btnBrew.Location = new System.Drawing.Point(412, 199);
             btnBrew.Name = "btnBrew";
             btnBrew.Size = new System.Drawing.Size(75, 23);
-            btnBrew.Text = "Brew Next";
+            btnBrew.Text = "Brew All";
             btnBrew.UseVisualStyleBackColor = true;
             btnBrew.Click += btnBrew_Click;
+            //
+            // rtbTotals
+            //
+            rtbTotals.Location = new System.Drawing.Point(412, 228);
+            rtbTotals.Name = "rtbTotals";
+            rtbTotals.ReadOnly = true;
+            rtbTotals.Size = new System.Drawing.Size(150, 99);
+            rtbTotals.TabStop = false;
             //
             // tabInventory
             //

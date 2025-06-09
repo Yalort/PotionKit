@@ -15,6 +15,7 @@ namespace PotionApp
             {
                 Recipe = recipe;
                 txtName.Text = recipe.Name;
+                txtSpecial.Text = recipe.Special;
                 numAnimal.Value = recipe.Animal;
                 numBerry.Value = recipe.Berry;
                 numFungi.Value = recipe.Fungi;
@@ -41,13 +42,14 @@ namespace PotionApp
             Recipe.Mineral = (int)numMineral.Value;
             Recipe.Root = (int)numRoot.Value;
             Recipe.Solution = (int)numSolution.Value;
+            Recipe.Special = txtSpecial.Text.Trim();
             DialogResult = DialogResult.OK;
             Close();
         }
 
         private void SetupNumericControls()
         {
-            int top = 50;
+            int top = 80;
             NumericUpDown[] nums = { numAnimal, numBerry, numFungi, numHerb, numMagic, numMineral, numRoot, numSolution };
             string[] labels = { "Animal", "Berry", "Fungi", "Herb", "Magic", "Mineral", "Root", "Solution" };
             for (int i = 0; i < nums.Length; i++)
