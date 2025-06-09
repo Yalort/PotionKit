@@ -287,7 +287,7 @@ namespace PotionApp
             btnWaterPlus.Location = new System.Drawing.Point(1289, 24);
             btnWaterPlus.Name = "btnWaterPlus";
             btnWaterPlus.Size = new System.Drawing.Size(23, 23);
-            btnWaterPlus.Text = "+";
+            btnWaterPlus.Text = "+M";
             btnWaterPlus.UseVisualStyleBackColor = true;
             btnWaterPlus.Click += adjustWater_Click;
             //
@@ -296,7 +296,7 @@ namespace PotionApp
             btnWaterMinus.Location = new System.Drawing.Point(1289, 53);
             btnWaterMinus.Name = "btnWaterMinus";
             btnWaterMinus.Size = new System.Drawing.Size(23, 23);
-            btnWaterMinus.Text = "-";
+            btnWaterMinus.Text = "-M";
             btnWaterMinus.UseVisualStyleBackColor = true;
             btnWaterMinus.Click += adjustWater_Click;
             //
