@@ -5,6 +5,7 @@ PotionApp is a simple Windows Forms application for managing potion recipes and 
 ## Features
 
 - Add and edit recipes with ingredient counts and special items.
+- Right-click a recipe to edit or delete it.
 - Queue up multiple recipes for brewing and track required ingredients.
 - View inventory of brewed potions.
 - Right-click an inventory item to create a recipe for that potion.

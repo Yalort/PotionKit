@@ -16,6 +16,7 @@ namespace PotionApp
         private readonly string[] ingredientNames = { "Animal", "Berry", "Fungi", "Herb", "Magic", "Mineral", "Root", "Solution", "Bottles" };
         private NumericUpDown[] ingredientControls = Array.Empty<NumericUpDown>();
         private readonly ContextMenuStrip inventoryMenu = new();
+        private readonly ContextMenuStrip recipeMenu = new();
 
         private int waterAmount = 1000;
 
@@ -30,6 +31,11 @@ namespace PotionApp
             inventoryMenu.Items.Add("Add Recipe", null, inventoryAddRecipe_Click);
             listInventory.ContextMenuStrip = inventoryMenu;
             listInventory.MouseDown += listInventory_MouseDown;
+
+            recipeMenu.Items.Add("Edit", null, recipeEdit_Click);
+            recipeMenu.Items.Add("Delete", null, recipeDelete_Click);
+            listRecipes.ContextMenuStrip = recipeMenu;
+            listRecipes.MouseDown += listRecipes_MouseDown;
             SetupIngredientControls();
             lblRecipeColumns.Text = Recipe.Header;
             lblQueueColumns.Text = Recipe.Header;
@@ -224,6 +230,15 @@ namespace PotionApp
             }
         }
 
+        private void listRecipes_MouseDown(object? sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                int index = listRecipes.IndexFromPoint(e.Location);
+                if (index >= 0) listRecipes.SelectedIndex = index;
+            }
+        }
+
         private void inventoryAddRecipe_Click(object? sender, EventArgs e)
         {
             if (listInventory.SelectedItem is not string item) return;
@@ -234,6 +249,30 @@ namespace PotionApp
                 recipes.Add(frm.Recipe);
                 RefreshRecipes();
             }
+        }
+
+        private void recipeEdit_Click(object? sender, EventArgs e)
+        {
+            if (SelectedRecipe == null) return;
+            using var frm = new RecipeForm(SelectedRecipe);
+            if (frm.ShowDialog(this) == DialogResult.OK)
+            {
+                RefreshRecipes();
+                RefreshQueue();
+            }
+        }
+
+        private void recipeDelete_Click(object? sender, EventArgs e)
+        {
+            if (SelectedRecipe == null) return;
+            recipes.Remove(SelectedRecipe);
+            var items = brewQueue.ToList();
+            items.RemoveAll(r => r == SelectedRecipe);
+            brewQueue.Clear();
+            foreach (var r in items)
+                brewQueue.Enqueue(r);
+            RefreshRecipes();
+            RefreshQueue();
         }
 
         private void SetupIngredientControls()
