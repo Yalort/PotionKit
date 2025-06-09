@@ -26,7 +26,7 @@ namespace PotionApp
         private System.Windows.Forms.NumericUpDown numRoot;
         private System.Windows.Forms.NumericUpDown numSolution;
         private System.Windows.Forms.NumericUpDown numBottles;
-        private System.Windows.Forms.ProgressBar barWater;
+        private VerticalProgressBar barWater;
         private System.Windows.Forms.Label lblWater;
         private System.Windows.Forms.Button btnWaterPlus;
         private System.Windows.Forms.Button btnWaterMinus;
@@ -69,7 +69,7 @@ namespace PotionApp
             numRoot = new System.Windows.Forms.NumericUpDown();
             numSolution = new System.Windows.Forms.NumericUpDown();
             numBottles = new System.Windows.Forms.NumericUpDown();
-            barWater = new System.Windows.Forms.ProgressBar();
+            barWater = new VerticalProgressBar();
             lblWater = new System.Windows.Forms.Label();
             lblRecipeColumns = new System.Windows.Forms.Label();
             lblQueueColumns = new System.Windows.Forms.Label();
@@ -102,7 +102,7 @@ namespace PotionApp
             tabControl1.Location = new System.Drawing.Point(0, 0);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 1;
-            tabControl1.Size = new System.Drawing.Size(584, 361);
+            tabControl1.Size = new System.Drawing.Size(700, 361);
             //
             // tabRecipes
             //
@@ -112,7 +112,7 @@ namespace PotionApp
             tabRecipes.Location = new System.Drawing.Point(4, 24);
             tabRecipes.Name = "tabRecipes";
             tabRecipes.Padding = new System.Windows.Forms.Padding(3);
-            tabRecipes.Size = new System.Drawing.Size(576, 333);
+            tabRecipes.Size = new System.Drawing.Size(692, 333);
             tabRecipes.Text = "Recipes";
             tabRecipes.UseVisualStyleBackColor = true;
             //
@@ -167,20 +167,20 @@ namespace PotionApp
             tabBrew.Location = new System.Drawing.Point(4, 24);
             tabBrew.Name = "tabBrew";
             tabBrew.Padding = new System.Windows.Forms.Padding(3);
-            tabBrew.Size = new System.Drawing.Size(576, 333);
+            tabBrew.Size = new System.Drawing.Size(692, 333);
             tabBrew.Text = "Brewing";
             tabBrew.UseVisualStyleBackColor = true;
             //
             // comboRecipes
             //
             comboRecipes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            comboRecipes.Location = new System.Drawing.Point(6, 170);
+            comboRecipes.Location = new System.Drawing.Point(6, 130);
             comboRecipes.Name = "comboRecipes";
             comboRecipes.Size = new System.Drawing.Size(200, 23);
             //
             // btnAddQueue
             //
-            btnAddQueue.Location = new System.Drawing.Point(212, 170);
+            btnAddQueue.Location = new System.Drawing.Point(212, 130);
             btnAddQueue.Name = "btnAddQueue";
             btnAddQueue.Size = new System.Drawing.Size(75, 23);
             btnAddQueue.Text = "Add";
@@ -223,22 +223,22 @@ namespace PotionApp
             // lblWater
             //
             lblWater.AutoSize = true;
-            lblWater.Location = new System.Drawing.Point(412, 6);
+            lblWater.Location = new System.Drawing.Point(560, 6);
             lblWater.Name = "lblWater";
             lblWater.Size = new System.Drawing.Size(45, 15);
             lblWater.Text = "Water";
             //
             // barWater
             //
-            barWater.Location = new System.Drawing.Point(412, 24);
+            barWater.Location = new System.Drawing.Point(560, 24);
             barWater.Maximum = 1000;
             barWater.Name = "barWater";
-            barWater.Size = new System.Drawing.Size(150, 23);
+            barWater.Size = new System.Drawing.Size(23, 150);
             barWater.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             //
             // btnWaterPlus
             //
-            btnWaterPlus.Location = new System.Drawing.Point(412, 53);
+            btnWaterPlus.Location = new System.Drawing.Point(589, 24);
             btnWaterPlus.Name = "btnWaterPlus";
             btnWaterPlus.Size = new System.Drawing.Size(23, 23);
             btnWaterPlus.Text = "+";
@@ -247,7 +247,7 @@ namespace PotionApp
             //
             // btnWaterMinus
             //
-            btnWaterMinus.Location = new System.Drawing.Point(441, 53);
+            btnWaterMinus.Location = new System.Drawing.Point(589, 53);
             btnWaterMinus.Name = "btnWaterMinus";
             btnWaterMinus.Size = new System.Drawing.Size(23, 23);
             btnWaterMinus.Text = "-";
@@ -256,7 +256,7 @@ namespace PotionApp
             //
             // btnFillWater
             //
-            btnFillWater.Location = new System.Drawing.Point(470, 53);
+            btnFillWater.Location = new System.Drawing.Point(589, 82);
             btnFillWater.Name = "btnFillWater";
             btnFillWater.Size = new System.Drawing.Size(92, 23);
             btnFillWater.Text = "Fill";
@@ -272,7 +272,7 @@ namespace PotionApp
             tabInventory.Location = new System.Drawing.Point(4, 24);
             tabInventory.Name = "tabInventory";
             tabInventory.Padding = new System.Windows.Forms.Padding(3);
-            tabInventory.Size = new System.Drawing.Size(576, 333);
+            tabInventory.Size = new System.Drawing.Size(692, 333);
             tabInventory.Text = "Inventory";
             tabInventory.UseVisualStyleBackColor = true;
             //
@@ -315,7 +315,7 @@ namespace PotionApp
             //
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(584, 361);
+            ClientSize = new System.Drawing.Size(700, 361);
             Controls.Add(tabControl1);
             Name = "Form1";
             Text = "Potion Manager";
