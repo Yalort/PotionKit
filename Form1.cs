@@ -18,6 +18,9 @@ namespace PotionApp
         private readonly ContextMenuStrip inventoryMenu = new();
         private readonly ContextMenuStrip recipeMenu = new();
 
+        // Horizontal offset used when laying out controls on the Brewing tab
+        private const int BrewOffsetX = 620;
+
         private int waterCapacity = 1000;
         private int waterAmount = 1000;
 
@@ -69,11 +72,16 @@ namespace PotionApp
 
         private void btnAddQueue_Click(object sender, EventArgs e)
         {
-            if (comboRecipes.SelectedItem is Recipe rec)
+            if (listBrewRecipes.SelectedItem is Recipe rec)
             {
                 brewQueue.Enqueue(rec);
                 RefreshQueue();
             }
+        }
+
+        private void listBrewRecipes_DoubleClick(object sender, EventArgs e)
+        {
+            btnAddQueue_Click(sender, e);
         }
 
         private void listQueue_DoubleClick(object sender, EventArgs e)
@@ -302,11 +310,11 @@ namespace PotionApp
             {
                 int row = i / 4;
                 int col = i % 4;
-                int x = 6 + col * 140;
+                int x = BrewOffsetX + 6 + col * 140;
                 int y = 6 + row * 80;
                 if (i == nums.Length - 1)
                 {
-                    x = 6 + 3 * 140;
+                    x = BrewOffsetX + 6 + 3 * 140;
                     y -= 20;
                 }
 
@@ -350,8 +358,8 @@ namespace PotionApp
         {
             listRecipes.DataSource = null;
             listRecipes.DataSource = recipes;
-            comboRecipes.DataSource = null;
-            comboRecipes.DataSource = recipes;
+            listBrewRecipes.DataSource = null;
+            listBrewRecipes.DataSource = recipes;
         }
 
         private void RefreshQueue()
