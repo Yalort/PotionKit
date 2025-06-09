@@ -51,6 +51,16 @@ namespace PotionApp
             FormClosing += Form1_FormClosing;
         }
 
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            using var frm = new RecipeForm();
+            if (frm.ShowDialog(this) == DialogResult.OK)
+            {
+                recipes.Add(frm.Recipe);
+                RefreshRecipes();
+            }
+        }
+
         private Recipe? SelectedRecipe => listRecipes.SelectedItem as Recipe;
 
         private void listRecipes_DoubleClick(object sender, EventArgs e)
