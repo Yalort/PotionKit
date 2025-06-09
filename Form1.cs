@@ -12,7 +12,7 @@ namespace PotionApp
         private readonly Queue<Recipe> brewQueue = new();
         private readonly Dictionary<string, int> inventory = new();
 
-        private readonly string dataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "PotionKit");
+        private readonly string dataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "potionkit2");
         private string IngredientsPath => Path.Combine(dataDir, "ingredients.json");
         private string RecipesPath => Path.Combine(dataDir, "recipes.json");
         private string InventoryPath => Path.Combine(dataDir, "inventory.json");
