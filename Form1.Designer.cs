@@ -7,6 +7,7 @@ namespace PotionApp
         private System.Windows.Forms.TabPage tabRecipes;
         private System.Windows.Forms.TabPage tabBrew;
         private System.Windows.Forms.TabPage tabInventory;
+        private System.Windows.Forms.TabPage tabHelp;
         private System.Windows.Forms.ListBox listRecipes;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.ComboBox comboRecipes;
@@ -34,6 +35,7 @@ namespace PotionApp
         private System.Windows.Forms.RichTextBox rtbTotals;
         private System.Windows.Forms.Label lblRecipeColumns;
         private System.Windows.Forms.Label lblQueueColumns;
+        private System.Windows.Forms.TextBox txtHelp;
 
         protected override void Dispose(bool disposing)
         {
@@ -50,6 +52,7 @@ namespace PotionApp
             tabRecipes = new System.Windows.Forms.TabPage();
             tabBrew = new System.Windows.Forms.TabPage();
             tabInventory = new System.Windows.Forms.TabPage();
+            tabHelp = new System.Windows.Forms.TabPage();
             listRecipes = new System.Windows.Forms.ListBox();
             listQueue = new System.Windows.Forms.ListBox();
             listInventory = new System.Windows.Forms.ListBox();
@@ -71,6 +74,7 @@ namespace PotionApp
             numBottles = new System.Windows.Forms.NumericUpDown();
             barWater = new VerticalProgressBar();
             lblWater = new System.Windows.Forms.Label();
+            txtHelp = new System.Windows.Forms.TextBox();
             lblRecipeColumns = new System.Windows.Forms.Label();
             lblQueueColumns = new System.Windows.Forms.Label();
             btnWaterPlus = new System.Windows.Forms.Button();
@@ -81,6 +85,7 @@ namespace PotionApp
             tabRecipes.SuspendLayout();
             tabBrew.SuspendLayout();
             tabInventory.SuspendLayout();
+            tabHelp.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(numAnimal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(numBerry)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(numFungi)).BeginInit();
@@ -98,6 +103,7 @@ namespace PotionApp
             tabControl1.Controls.Add(tabRecipes);
             tabControl1.Controls.Add(tabBrew);
             tabControl1.Controls.Add(tabInventory);
+            tabControl1.Controls.Add(tabHelp);
             tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             tabControl1.Location = new System.Drawing.Point(0, 0);
             tabControl1.Name = "tabControl1";
@@ -318,6 +324,27 @@ namespace PotionApp
             btnInventoryAdd.UseVisualStyleBackColor = true;
             btnInventoryAdd.Click += btnInventoryAdd_Click;
             //
+            // tabHelp
+            //
+            tabHelp.Controls.Add(txtHelp);
+            tabHelp.Location = new System.Drawing.Point(4, 24);
+            tabHelp.Name = "tabHelp";
+            tabHelp.Padding = new System.Windows.Forms.Padding(3);
+            tabHelp.Size = new System.Drawing.Size(772, 333);
+            tabHelp.Text = "Help";
+            tabHelp.UseVisualStyleBackColor = true;
+            //
+            // txtHelp
+            //
+            txtHelp.Dock = System.Windows.Forms.DockStyle.Fill;
+            txtHelp.Location = new System.Drawing.Point(3, 3);
+            txtHelp.Multiline = true;
+            txtHelp.Name = "txtHelp";
+            txtHelp.ReadOnly = true;
+            txtHelp.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            txtHelp.Size = new System.Drawing.Size(766, 327);
+            txtHelp.Text = "Controls:\r\n\r\nRecipes tab:\r\n - Add new recipes with the Add button.\r\n - Double-click a recipe to edit it.\r\n\r\nBrewing tab:\r\n - Choose a recipe and press Add to queue.\r\n - Double-click a queued item to remove it.\r\n - Brew All consumes ingredients and bottles.\r\n - Use the + and - buttons to adjust ingredient or water amounts. Hold Shift for \u00b15, Ctrl for \u00b110, and both for \u00b1100.\r\n\r\nInventory tab:\r\n - Enter a name and count then click Add.\r\n - Double-click an item to consume one. Unknown potions show in orange.";
+            //
             // Form1
             //
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -330,6 +357,7 @@ namespace PotionApp
             tabRecipes.ResumeLayout(false);
             tabBrew.ResumeLayout(false);
             tabInventory.ResumeLayout(false);
+            tabHelp.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(numAnimal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(numBerry)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(numFungi)).EndInit();
