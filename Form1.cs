@@ -23,6 +23,8 @@ namespace PotionApp
         {
             InitializeComponent();
             SetupIngredientControls();
+            lblRecipeColumns.Text = Recipe.Header;
+            lblQueueColumns.Text = Recipe.Header;
             LoadData();
             RefreshAll();
             FormClosing += Form1_FormClosing;
@@ -198,6 +200,7 @@ namespace PotionApp
         {
             if (ingredientControls.Length == 0) return;
             int[] totals = new int[ingredientControls.Length];
+            var specialCounts = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
             foreach (var r in brewQueue)
             {
                 totals[0] += r.Animal;
@@ -208,6 +211,16 @@ namespace PotionApp
                 totals[5] += r.Mineral;
                 totals[6] += r.Root;
                 totals[7] += r.Solution;
+                if (!string.IsNullOrWhiteSpace(r.Special))
+                {
+                    foreach (var sp in r.Special.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        var name = sp.Trim();
+                        if (name.Length == 0) continue;
+                        if (!specialCounts.ContainsKey(name)) specialCounts[name] = 0;
+                        specialCounts[name]++;
+                    }
+                }
             }
 
             rtbTotals.Clear();
@@ -221,6 +234,14 @@ namespace PotionApp
                 rtbTotals.AppendText(remaining.ToString());
                 rtbTotals.SelectionColor = System.Drawing.Color.Black;
                 rtbTotals.AppendText(")\n");
+            }
+            if (specialCounts.Count > 0)
+            {
+                rtbTotals.AppendText("\nSpecial Ingredients:\n");
+                foreach (var kv in specialCounts)
+                {
+                    rtbTotals.AppendText($"{kv.Key}: {kv.Value}\n");
+                }
             }
         }
 
