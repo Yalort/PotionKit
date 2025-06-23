@@ -177,31 +177,34 @@ namespace PotionApp
             //
             // tabBrew
             //
+            grpIngredients.Controls.Add(numAnimal);
+            grpIngredients.Controls.Add(numBerry);
+            grpIngredients.Controls.Add(numFungi);
+            grpIngredients.Controls.Add(numHerb);
+            grpIngredients.Controls.Add(numMagic);
+            grpIngredients.Controls.Add(numMineral);
+            grpIngredients.Controls.Add(numRoot);
+            grpIngredients.Controls.Add(numSolution);
+            grpIngredients.Controls.Add(numBottles);
+
+            grpWater.Controls.Add(barWater);
+            grpWater.Controls.Add(lblWater);
+            grpWater.Controls.Add(btnFillWater);
+            grpWater.Controls.Add(btnAddWater);
+            grpWater.Controls.Add(listWaterContainers);
+
+            grpQueue.Controls.Add(lblQueueColumns);
+            grpQueue.Controls.Add(listQueue);
+            grpQueue.Controls.Add(btnBrew);
+            grpQueue.Controls.Add(btnClearQueue);
+            grpQueue.Controls.Add(rtbTotals);
+
             tabBrew.Controls.Add(grpWater);
             tabBrew.Controls.Add(grpQueue);
             tabBrew.Controls.Add(grpIngredients);
             tabBrew.Controls.Add(listBrewRecipes);
             tabBrew.Controls.Add(cmbBrewFilter);
             tabBrew.Controls.Add(btnAddQueue);
-            tabBrew.Controls.Add(lblQueueColumns);
-            tabBrew.Controls.Add(listQueue);
-            tabBrew.Controls.Add(btnBrew);
-            tabBrew.Controls.Add(btnClearQueue);
-            tabBrew.Controls.Add(rtbTotals);
-            tabBrew.Controls.Add(numAnimal);
-            tabBrew.Controls.Add(numBerry);
-            tabBrew.Controls.Add(numFungi);
-            tabBrew.Controls.Add(numHerb);
-            tabBrew.Controls.Add(numMagic);
-            tabBrew.Controls.Add(numMineral);
-            tabBrew.Controls.Add(numRoot);
-            tabBrew.Controls.Add(numSolution);
-            tabBrew.Controls.Add(numBottles);
-            tabBrew.Controls.Add(barWater);
-            tabBrew.Controls.Add(lblWater);
-            tabBrew.Controls.Add(btnFillWater);
-            tabBrew.Controls.Add(btnAddWater);
-            tabBrew.Controls.Add(listWaterContainers);
             tabBrew.Location = new System.Drawing.Point(4, 24);
             tabBrew.Name = "tabBrew";
             tabBrew.Padding = new System.Windows.Forms.Padding(3);
