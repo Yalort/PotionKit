@@ -34,6 +34,7 @@ namespace PotionApp
         private VerticalProgressBar barWater;
         private System.Windows.Forms.Label lblWater;
         private System.Windows.Forms.Button btnFillWater;
+        private System.Windows.Forms.Button btnAddWater;
         private System.Windows.Forms.ListBox listWaterContainers;
         private System.Windows.Forms.RichTextBox rtbTotals;
         private System.Windows.Forms.Label lblRecipeColumns;
@@ -82,6 +83,7 @@ namespace PotionApp
             barWater = new VerticalProgressBar();
             lblWater = new System.Windows.Forms.Label();
             btnFillWater = new System.Windows.Forms.Button();
+            btnAddWater = new System.Windows.Forms.Button();
             listWaterContainers = new System.Windows.Forms.ListBox();
             txtHelp = new System.Windows.Forms.TextBox();
             lblRecipeColumns = new System.Windows.Forms.Label();
@@ -186,6 +188,7 @@ namespace PotionApp
             tabBrew.Controls.Add(barWater);
             tabBrew.Controls.Add(lblWater);
             tabBrew.Controls.Add(btnFillWater);
+            tabBrew.Controls.Add(btnAddWater);
             tabBrew.Controls.Add(listWaterContainers);
             tabBrew.Location = new System.Drawing.Point(4, 24);
             tabBrew.Name = "tabBrew";
@@ -292,6 +295,15 @@ namespace PotionApp
             btnFillWater.Text = "Fill";
             btnFillWater.UseVisualStyleBackColor = true;
             btnFillWater.Click += btnFillWater_Click;
+            //
+            // btnAddWater
+            //
+            btnAddWater.Location = new System.Drawing.Point(1066, 53);
+            btnAddWater.Name = "btnAddWater";
+            btnAddWater.Size = new System.Drawing.Size(92, 23);
+            btnAddWater.Text = "Add";
+            btnAddWater.UseVisualStyleBackColor = true;
+            btnAddWater.Click += btnAddWater_Click;
             //
             // listWaterContainers
             //
