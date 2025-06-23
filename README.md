@@ -13,7 +13,7 @@ PotionApp is a simple Windows Forms application for managing potion recipes and 
 - Right-click an inventory item to create a recipe, rename it, edit the count, add it to the brew queue, or set its category.
 - Totals panel shows how many ingredients and how much water are needed, highlighting shortages and listing special ingredients.
 - Column headers label every ingredient in the recipe and queue lists.
-- Adjustable water capacity with buttons and a vertical progress bar showing current water.
+- Manage multiple water containers shown beside a vertical water bar.
 - All data is saved to the `Documents/potionkit2` folder in JSON format.
 - Help tab explains every control and shortcut.
 

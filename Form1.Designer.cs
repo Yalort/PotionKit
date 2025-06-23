@@ -33,13 +33,8 @@ namespace PotionApp
         private System.Windows.Forms.NumericUpDown numBottles;
         private VerticalProgressBar barWater;
         private System.Windows.Forms.Label lblWater;
-        private System.Windows.Forms.Label lblWaterAdjust;
-        private System.Windows.Forms.NumericUpDown numWaterAdjust;
-        private System.Windows.Forms.Button btnWaterAmountPlus;
-        private System.Windows.Forms.Button btnWaterAmountMinus;
-        private System.Windows.Forms.Button btnWaterPlus;
-        private System.Windows.Forms.Button btnWaterMinus;
         private System.Windows.Forms.Button btnFillWater;
+        private System.Windows.Forms.ListBox listWaterContainers;
         private System.Windows.Forms.RichTextBox rtbTotals;
         private System.Windows.Forms.Label lblRecipeColumns;
         private System.Windows.Forms.Label lblQueueColumns;
@@ -86,16 +81,11 @@ namespace PotionApp
             numBottles = new System.Windows.Forms.NumericUpDown();
             barWater = new VerticalProgressBar();
             lblWater = new System.Windows.Forms.Label();
-            lblWaterAdjust = new System.Windows.Forms.Label();
-            numWaterAdjust = new System.Windows.Forms.NumericUpDown();
-            btnWaterAmountPlus = new System.Windows.Forms.Button();
-            btnWaterAmountMinus = new System.Windows.Forms.Button();
+            btnFillWater = new System.Windows.Forms.Button();
+            listWaterContainers = new System.Windows.Forms.ListBox();
             txtHelp = new System.Windows.Forms.TextBox();
             lblRecipeColumns = new System.Windows.Forms.Label();
             lblQueueColumns = new System.Windows.Forms.Label();
-            btnWaterPlus = new System.Windows.Forms.Button();
-            btnWaterMinus = new System.Windows.Forms.Button();
-            btnFillWater = new System.Windows.Forms.Button();
             rtbTotals = new System.Windows.Forms.RichTextBox();
             tabControl1.SuspendLayout();
             tabRecipes.SuspendLayout();
@@ -111,7 +101,6 @@ namespace PotionApp
             ((System.ComponentModel.ISupportInitialize)(numRoot)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(numSolution)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(numBottles)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(numWaterAdjust)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(numInventoryCount)).BeginInit();
             SuspendLayout();
             //
@@ -196,13 +185,8 @@ namespace PotionApp
             tabBrew.Controls.Add(numBottles);
             tabBrew.Controls.Add(barWater);
             tabBrew.Controls.Add(lblWater);
-            tabBrew.Controls.Add(lblWaterAdjust);
-            tabBrew.Controls.Add(numWaterAdjust);
-            tabBrew.Controls.Add(btnWaterPlus);
-            tabBrew.Controls.Add(btnWaterMinus);
             tabBrew.Controls.Add(btnFillWater);
-            tabBrew.Controls.Add(btnWaterAmountPlus);
-            tabBrew.Controls.Add(btnWaterAmountMinus);
+            tabBrew.Controls.Add(listWaterContainers);
             tabBrew.Location = new System.Drawing.Point(4, 24);
             tabBrew.Name = "tabBrew";
             tabBrew.Padding = new System.Windows.Forms.Padding(3);
@@ -300,41 +284,6 @@ namespace PotionApp
             barWater.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             barWater.ForeColor = System.Drawing.Color.Blue;
             //
-            // lblWaterAdjust
-            //
-            lblWaterAdjust.AutoSize = true;
-            lblWaterAdjust.Location = new System.Drawing.Point(1069, 108);
-            lblWaterAdjust.Name = "lblWaterAdjust";
-            lblWaterAdjust.Size = new System.Drawing.Size(47, 15);
-            lblWaterAdjust.Text = "Amount";
-            //
-            // numWaterAdjust
-            //
-            numWaterAdjust.Location = new System.Drawing.Point(1069, 126);
-            numWaterAdjust.Maximum = decimal.MaxValue;
-            numWaterAdjust.Minimum = 1;
-            numWaterAdjust.Name = "numWaterAdjust";
-            numWaterAdjust.Size = new System.Drawing.Size(60, 23);
-            numWaterAdjust.Value = 1;
-            //
-            // btnWaterPlus
-            //
-            btnWaterPlus.Location = new System.Drawing.Point(1090, 24);
-            btnWaterPlus.Name = "btnWaterPlus";
-            btnWaterPlus.Size = new System.Drawing.Size(46, 23);
-            btnWaterPlus.Text = "+M";
-            btnWaterPlus.UseVisualStyleBackColor = true;
-            btnWaterPlus.Click += adjustWater_Click;
-            //
-            // btnWaterMinus
-            //
-            btnWaterMinus.Location = new System.Drawing.Point(1090, 53);
-            btnWaterMinus.Name = "btnWaterMinus";
-            btnWaterMinus.Size = new System.Drawing.Size(46, 23);
-            btnWaterMinus.Text = "-M";
-            btnWaterMinus.UseVisualStyleBackColor = true;
-            btnWaterMinus.Click += adjustWater_Click;
-            //
             // btnFillWater
             //
             btnFillWater.Location = new System.Drawing.Point(1066, 82);
@@ -344,23 +293,13 @@ namespace PotionApp
             btnFillWater.UseVisualStyleBackColor = true;
             btnFillWater.Click += btnFillWater_Click;
             //
-            // btnWaterAmountPlus
+            // listWaterContainers
             //
-            btnWaterAmountPlus.Location = new System.Drawing.Point(1066, 24);
-            btnWaterAmountPlus.Name = "btnWaterAmountPlus";
-            btnWaterAmountPlus.Size = new System.Drawing.Size(23, 23);
-            btnWaterAmountPlus.Text = "+";
-            btnWaterAmountPlus.UseVisualStyleBackColor = true;
-            btnWaterAmountPlus.Click += adjustWaterAmount_Click;
-            //
-            // btnWaterAmountMinus
-            //
-            btnWaterAmountMinus.Location = new System.Drawing.Point(1066, 53);
-            btnWaterAmountMinus.Name = "btnWaterAmountMinus";
-            btnWaterAmountMinus.Size = new System.Drawing.Size(23, 23);
-            btnWaterAmountMinus.Text = "-";
-            btnWaterAmountMinus.UseVisualStyleBackColor = true;
-            btnWaterAmountMinus.Click += adjustWaterAmount_Click;
+            listWaterContainers.FormattingEnabled = true;
+            listWaterContainers.ItemHeight = 15;
+            listWaterContainers.Location = new System.Drawing.Point(892, 6);
+            listWaterContainers.Name = "listWaterContainers";
+            listWaterContainers.Size = new System.Drawing.Size(150, 214);
             //
             // tabInventory
             //
@@ -437,7 +376,7 @@ namespace PotionApp
             txtHelp.ReadOnly = true;
             txtHelp.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             txtHelp.Size = new System.Drawing.Size(1170, 327);
-            txtHelp.Text = "Controls:\r\n\r\nRecipes tab:\r\n - Add new recipes with the Add button.\r\n - Double-click a recipe to edit it.\r\n - Right-click a recipe to edit, delete, or set its category.\r\n\r\nBrewing tab:\r\n - Double-click a recipe or use the Add button to queue it.\r\n - Double-click a queued item to remove it.\r\n - Brew All consumes ingredients, bottles, and water.\r\n - Use + and - next to each ingredient to change amounts.\r\n - Use the + and - by the water bar to adjust current water.\r\n - Use the + and - beside the Amount box to change capacity.\r\n - Hold Shift for \u00b15, Ctrl for \u00b110, and both for \u00b1100.\r\n\r\nInventory tab:\r\n - Type a name and count then click Add.\r\n - Double-click an item to consume one.\r\n - Right-click an item to create a recipe, rename it, edit the count, add to queue, or set a category.\r\n - Unknown potions show in orange.";
+            txtHelp.Text = "Controls:\r\n\r\nRecipes tab:\r\n - Add new recipes with the Add button.\r\n - Double-click a recipe to edit it.\r\n - Right-click a recipe to edit, delete, or set its category.\r\n\r\nBrewing tab:\r\n - Double-click a recipe or use the Add button to queue it.\r\n - Double-click a queued item to remove it.\r\n - Brew All consumes ingredients, bottles, and water.\r\n - Use + and - next to each ingredient to change amounts.\r\n - Water containers list shows all storage. Double-click one to fill it or right-click for more options.\r\n - Fill All fills every container.\r\n - Hold Shift for \u00b15, Ctrl for \u00b110, and both for \u00b1100 when adjusting ingredients.\r\n\r\nInventory tab:\r\n - Type a name and count then click Add.\r\n - Double-click an item to consume one.\r\n - Right-click an item to create a recipe, rename it, edit the count, add to queue, or set a category.\r\n - Unknown potions show in orange.";
             //
             // Form1
             //
@@ -461,7 +400,6 @@ namespace PotionApp
             ((System.ComponentModel.ISupportInitialize)(numRoot)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(numSolution)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(numBottles)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(numWaterAdjust)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(numInventoryCount)).EndInit();
             ResumeLayout(false);
         }

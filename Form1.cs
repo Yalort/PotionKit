@@ -20,19 +20,25 @@ namespace PotionApp
         private readonly ContextMenuStrip inventoryMenu = new();
         private readonly ContextMenuStrip recipeMenu = new();
         private readonly ContextMenuStrip brewMenu = new();
+        private ListBox? listWaterContainers;
 
         // Horizontal offset used when laying out controls on the Brewing tab
         // Moved left slightly so controls do not overlap the water UI
         private const int BrewOffsetX = 500;
 
-        private int waterCapacity = 1000;
-        private int waterAmount = 1000;
+        private readonly List<WaterContainer> waterContainers = new();
+        private readonly ContextMenuStrip waterMenu = new();
 
         private readonly string dataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "potionkit2");
         private string IngredientsPath => Path.Combine(dataDir, "ingredients.json");
         private string RecipesPath => Path.Combine(dataDir, "recipes.json");
         private string InventoryPath => Path.Combine(dataDir, "inventory.json");
         private string PotionCategoriesPath => Path.Combine(dataDir, "potion_categories.json");
+        private string WaterContainersPath => Path.Combine(dataDir, "water.json");
+
+        private int TotalWaterCapacity => waterContainers.Sum(c => c.Capacity);
+        private int TotalWaterAmount => waterContainers.Sum(c => c.Amount);
+        private int ActiveWaterAmount => waterContainers.Where(c => c.Active).Sum(c => c.Amount);
 
         public Form1()
         {
@@ -54,6 +60,16 @@ namespace PotionApp
             brewMenu.Items.Add("Add Amount", null, brewAddAmount_Click);
             listBrewRecipes.ContextMenuStrip = brewMenu;
             listBrewRecipes.MouseDown += listBrewRecipes_MouseDown;
+
+            waterMenu.Items.Add("Change Amount", null, waterChangeAmount_Click);
+            waterMenu.Items.Add("Delete", null, waterDelete_Click);
+            waterMenu.Items.Add("Toggle Active", null, waterToggleActive_Click);
+            waterMenu.Items.Add("Edit Name", null, waterEditName_Click);
+            waterMenu.Items.Add("Edit Capacity", null, waterEditCapacity_Click);
+            waterMenu.Items.Add("Add Another", null, waterAddAnother_Click);
+            listWaterContainers!.ContextMenuStrip = waterMenu;
+            listWaterContainers.MouseDown += listWaterContainers_MouseDown;
+            listWaterContainers.DoubleClick += listWaterContainers_DoubleClick;
             SetupIngredientControls();
             lblRecipeColumns.Text = Recipe.Header;
             lblQueueColumns.Text = Recipe.Header;
@@ -122,7 +138,7 @@ namespace PotionApp
         {
             if (brewQueue.Count == 0) return;
             int totalWaterNeeded = brewQueue.Count * 200;
-            if (waterAmount < totalWaterNeeded)
+            if (ActiveWaterAmount < totalWaterNeeded)
             {
                 MessageBox.Show("Not enough water", "Cannot Brew", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -149,12 +165,11 @@ namespace PotionApp
                 ingredientControls[6].Value -= rec.Root;
                 ingredientControls[7].Value -= rec.Solution;
                 ingredientControls[8].Value -= 1;
-                waterAmount -= 200;
+                UseWater(200);
             }
             RefreshQueue();
             RefreshInventory();
-            RefreshTotals();
-            UpdateWaterUI();
+            RefreshWater();
         }
 
         private void btnClearQueue_Click(object? sender, EventArgs e)
@@ -165,7 +180,7 @@ namespace PotionApp
 
         private string? GetBrewError(Recipe rec)
         {
-            if (waterAmount < 200)
+            if (ActiveWaterAmount < 200)
                 return "Not enough water";
             if (ingredientControls[8].Value < 1)
                 return "Not enough bottles";
@@ -194,49 +209,11 @@ namespace PotionApp
                 num.Value = Math.Max(num.Minimum, num.Value - delta);
         }
 
-        private void adjustWater_Click(object sender, EventArgs e)
-        {
-            bool shift = ModifierKeys.HasFlag(Keys.Shift);
-            bool ctrl = ModifierKeys.HasFlag(Keys.Control);
-            int delta = (int)numWaterAdjust.Value;
-            if (shift && ctrl) delta *= 100;
-            else if (ctrl) delta *= 10;
-            else if (shift) delta *= 5;
-            if (sender is Button btn && btn == btnWaterPlus)
-            {
-                if (waterCapacity > int.MaxValue - delta)
-                    waterCapacity = int.MaxValue;
-                else
-                    waterCapacity += delta;
-            }
-            else
-                waterCapacity = Math.Max(1, waterCapacity - delta);
-            waterAmount = Math.Min(waterAmount, waterCapacity);
-            UpdateWaterUI();
-            RefreshTotals();
-        }
-
-        private void adjustWaterAmount_Click(object sender, EventArgs e)
-        {
-            bool shift = ModifierKeys.HasFlag(Keys.Shift);
-            bool ctrl = ModifierKeys.HasFlag(Keys.Control);
-            int delta = 1;
-            if (shift && ctrl) delta = 100;
-            else if (ctrl) delta = 10;
-            else if (shift) delta = 5;
-            if (sender is Button btn && btn == btnWaterAmountPlus)
-                waterAmount = Math.Min(waterCapacity, waterAmount + delta);
-            else
-                waterAmount = Math.Max(0, waterAmount - delta);
-            UpdateWaterUI();
-            RefreshTotals();
-        }
-
         private void btnFillWater_Click(object sender, EventArgs e)
         {
-            waterAmount = waterCapacity;
-            UpdateWaterUI();
-            RefreshTotals();
+            foreach (var c in waterContainers)
+                c.Amount = c.Capacity;
+            RefreshWater();
         }
 
         private void listInventory_DoubleClick(object sender, EventArgs e)
@@ -255,6 +232,83 @@ namespace PotionApp
                     RefreshInventory();
                 }
             }
+        }
+
+        private void listWaterContainers_DoubleClick(object? sender, EventArgs e)
+        {
+            if (listWaterContainers!.SelectedIndex < 0) return;
+            var c = waterContainers[listWaterContainers.SelectedIndex];
+            c.Amount = c.Capacity;
+            RefreshWater();
+        }
+
+        private WaterContainer? SelectedWaterContainer =>
+            listWaterContainers != null && listWaterContainers.SelectedIndex >= 0
+                ? waterContainers[listWaterContainers.SelectedIndex]
+                : null;
+
+        private void waterChangeAmount_Click(object? sender, EventArgs e)
+        {
+            if (SelectedWaterContainer == null) return;
+            var input = SimplePrompt.ShowDialog("Enter new amount:", "Change Amount", SelectedWaterContainer.Amount.ToString());
+            if (input == null) return;
+            if (int.TryParse(input, out int val))
+            {
+                SelectedWaterContainer.Amount = Math.Clamp(val, 0, SelectedWaterContainer.Capacity);
+                RefreshWater();
+            }
+            else MessageBox.Show("Invalid number", "Change Amount", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void waterDelete_Click(object? sender, EventArgs e)
+        {
+            if (SelectedWaterContainer == null) return;
+            waterContainers.Remove(SelectedWaterContainer);
+            RefreshWater();
+        }
+
+        private void waterToggleActive_Click(object? sender, EventArgs e)
+        {
+            if (SelectedWaterContainer == null) return;
+            SelectedWaterContainer.Active = !SelectedWaterContainer.Active;
+            RefreshWater();
+        }
+
+        private void waterEditName_Click(object? sender, EventArgs e)
+        {
+            if (SelectedWaterContainer == null) return;
+            var input = SimplePrompt.ShowDialog("Enter name:", "Edit Name", SelectedWaterContainer.Name);
+            if (input == null) return;
+            SelectedWaterContainer.Name = input.Trim();
+            RefreshWater();
+        }
+
+        private void waterEditCapacity_Click(object? sender, EventArgs e)
+        {
+            if (SelectedWaterContainer == null) return;
+            var input = SimplePrompt.ShowDialog("Enter capacity:", "Edit Capacity", SelectedWaterContainer.Capacity.ToString());
+            if (input == null) return;
+            if (int.TryParse(input, out int cap) && cap > 0)
+            {
+                SelectedWaterContainer.Capacity = cap;
+                if (SelectedWaterContainer.Amount > cap)
+                    SelectedWaterContainer.Amount = cap;
+                RefreshWater();
+            }
+            else MessageBox.Show("Invalid number", "Edit Capacity", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void waterAddAnother_Click(object? sender, EventArgs e)
+        {
+            if (SelectedWaterContainer == null) return;
+            waterContainers.Add(new WaterContainer
+            {
+                Name = SelectedWaterContainer.Name,
+                Capacity = SelectedWaterContainer.Capacity,
+                Amount = SelectedWaterContainer.Amount,
+                Active = SelectedWaterContainer.Active
+            });
+            RefreshWater();
         }
 
         private void btnInventoryAdd_Click(object sender, EventArgs e)
@@ -307,6 +361,15 @@ namespace PotionApp
             {
                 int index = listBrewRecipes.IndexFromPoint(e.Location);
                 if (index >= 0) listBrewRecipes.SelectedIndex = index;
+            }
+        }
+
+        private void listWaterContainers_MouseDown(object? sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                int index = listWaterContainers!.IndexFromPoint(e.Location);
+                if (index >= 0) listWaterContainers.SelectedIndex = index;
             }
         }
 
@@ -518,11 +581,18 @@ namespace PotionApp
             listInventory.DataSource = items;
         }
 
+        private void RefreshWaterList()
+        {
+            listWaterContainers!.DataSource = null;
+            listWaterContainers.DataSource = waterContainers.Select(c => c.ToString()).ToList();
+        }
+
         private void RefreshAll()
         {
             RefreshRecipes();
             RefreshQueue();
             RefreshInventory();
+            RefreshWaterList();
             RefreshTotals();
             UpdateWaterUI();
         }
@@ -568,7 +638,7 @@ namespace PotionApp
                 rtbTotals.AppendText(")\n");
             }
             int waterNeeded = brewQueue.Count * 200;
-            int waterRemain = waterAmount - waterNeeded;
+            int waterRemain = ActiveWaterAmount - waterNeeded;
             rtbTotals.SelectionColor = System.Drawing.Color.Black;
             rtbTotals.AppendText($"Water: {waterNeeded} (");
             if (waterRemain < 0) rtbTotals.SelectionColor = System.Drawing.Color.Red;
@@ -587,10 +657,32 @@ namespace PotionApp
 
         private void UpdateWaterUI()
         {
-            int barMax = Math.Min(waterCapacity, int.MaxValue);
+            int capacity = TotalWaterCapacity;
+            int amount = TotalWaterAmount;
+            int barMax = Math.Min(capacity, int.MaxValue);
             barWater.Maximum = barMax;
-            barWater.Value = Math.Max(0, Math.Min(barMax, waterAmount));
-            lblWater.Text = $"Water: {waterAmount}/{waterCapacity} mL";
+            barWater.Value = Math.Max(0, Math.Min(barMax, amount));
+            lblWater.Text = $"Water: {amount}/{capacity} mL";
+        }
+
+        private void RefreshWater()
+        {
+            RefreshWaterList();
+            RefreshTotals();
+            UpdateWaterUI();
+        }
+
+        private void UseWater(int amount)
+        {
+            while (amount > 0)
+            {
+                var container = waterContainers.Where(c => c.Active && c.Amount > 0)
+                    .OrderBy(c => c.Amount).FirstOrDefault();
+                if (container == null) break;
+                int take = Math.Min(amount, container.Amount);
+                container.Amount -= take;
+                amount -= take;
+            }
         }
 
         private void LoadData()
@@ -647,11 +739,21 @@ namespace PotionApp
                         if (dict.TryGetValue("Root", out var r)) numRoot.Value = r;
                         if (dict.TryGetValue("Solution", out var s)) numSolution.Value = s;
                         if (dict.TryGetValue("Bottles", out var bo)) numBottles.Value = bo;
-                        if (dict.TryGetValue("WaterCapacity", out var cap))
-                            waterCapacity = Math.Max(1, cap);
-                        if (dict.TryGetValue("Water", out var w))
-                            waterAmount = Math.Max(0, Math.Min(waterCapacity, w));
                     }
+                }
+                if (File.Exists(WaterContainersPath))
+                {
+                    var json = File.ReadAllText(WaterContainersPath);
+                    var list = JsonSerializer.Deserialize<List<WaterContainer>>(json);
+                    if (list != null)
+                    {
+                        waterContainers.Clear();
+                        waterContainers.AddRange(list);
+                    }
+                }
+                if (waterContainers.Count == 0)
+                {
+                    waterContainers.Add(new WaterContainer { Name = "Bucket", Capacity = 1000, Amount = 1000 });
                 }
                 UpdateWaterUI();
                 categories.Clear();
@@ -680,15 +782,14 @@ namespace PotionApp
                     ["Mineral"] = (int)numMineral.Value,
                     ["Root"] = (int)numRoot.Value,
                     ["Solution"] = (int)numSolution.Value,
-                    ["Bottles"] = (int)numBottles.Value,
-                    ["Water"] = waterAmount,
-                    ["WaterCapacity"] = waterCapacity
+                    ["Bottles"] = (int)numBottles.Value
                 };
                 var options = new JsonSerializerOptions { WriteIndented = true };
                 File.WriteAllText(IngredientsPath, JsonSerializer.Serialize(ingredients, options));
                 File.WriteAllText(RecipesPath, JsonSerializer.Serialize(recipes, options));
                 File.WriteAllText(InventoryPath, JsonSerializer.Serialize(inventory, options));
                 File.WriteAllText(PotionCategoriesPath, JsonSerializer.Serialize(potionCategories, options));
+                File.WriteAllText(WaterContainersPath, JsonSerializer.Serialize(waterContainers, options));
             }
             catch (Exception ex)
             {
