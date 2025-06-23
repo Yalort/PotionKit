@@ -215,6 +215,16 @@ namespace PotionApp
             RefreshWater();
         }
 
+        private void btnAddWater_Click(object? sender, EventArgs e)
+        {
+            var wc = WaterContainerPrompt.ShowDialog("Add Water Container");
+            if (wc != null)
+            {
+                waterContainers.Add(wc);
+                RefreshWater();
+            }
+        }
+
         private void listInventory_DoubleClick(object? sender, EventArgs e)
         {
             if (listInventory.SelectedItem is not string item) return;
