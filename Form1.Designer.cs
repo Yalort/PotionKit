@@ -125,7 +125,7 @@ namespace PotionApp
             tabControl1.Location = new System.Drawing.Point(0, 0);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 1;
-            tabControl1.Size = new System.Drawing.Size(1184, 476);
+            tabControl1.Size = new System.Drawing.Size(1539, 619);
             //
             // tabRecipes
             //
@@ -136,7 +136,7 @@ namespace PotionApp
             tabRecipes.Location = new System.Drawing.Point(4, 24);
             tabRecipes.Name = "tabRecipes";
             tabRecipes.Padding = new System.Windows.Forms.Padding(3);
-            tabRecipes.Size = new System.Drawing.Size(1176, 448);
+            tabRecipes.Size = new System.Drawing.Size(1529, 582);
             tabRecipes.Text = "Recipes";
             tabRecipes.UseVisualStyleBackColor = true;
             //
@@ -205,7 +205,7 @@ namespace PotionApp
             tabBrew.Location = new System.Drawing.Point(4, 24);
             tabBrew.Name = "tabBrew";
             tabBrew.Padding = new System.Windows.Forms.Padding(3);
-            tabBrew.Size = new System.Drawing.Size(1176, 448);
+            tabBrew.Size = new System.Drawing.Size(1529, 582);
             tabBrew.Text = "Brewing";
             tabBrew.UseVisualStyleBackColor = true;
             //
@@ -245,7 +245,7 @@ namespace PotionApp
             //
             // grpQueue
             //
-            grpQueue.Location = new System.Drawing.Point(401, 214);
+            grpQueue.Location = new System.Drawing.Point(411, 235);
             grpQueue.Name = "grpQueue";
             grpQueue.Size = new System.Drawing.Size(490, 228);
             grpQueue.TabStop = false;
@@ -253,7 +253,7 @@ namespace PotionApp
             //
             // grpWater
             //
-            grpWater.Location = new System.Drawing.Point(887, 5);
+            grpWater.Location = new System.Drawing.Point(1241, 5);
             grpWater.Name = "grpWater";
             grpWater.Size = new System.Drawing.Size(283, 437);
             grpWater.TabStop = false;
@@ -264,7 +264,7 @@ namespace PotionApp
             //
             listQueue.FormattingEnabled = true;
             listQueue.ItemHeight = 15;
-            listQueue.Location = new System.Drawing.Point(406, 235);
+            listQueue.Location = new System.Drawing.Point(416, 256);
             listQueue.Name = "listQueue";
             listQueue.Size = new System.Drawing.Size(480, 208);
             listQueue.Font = new System.Drawing.Font("Consolas", 9F);
@@ -273,7 +273,7 @@ namespace PotionApp
             // lblQueueColumns
             //
             lblQueueColumns.AutoSize = true;
-            lblQueueColumns.Location = new System.Drawing.Point(406, 214);
+            lblQueueColumns.Location = new System.Drawing.Point(416, 240);
             lblQueueColumns.Name = "lblQueueColumns";
             lblQueueColumns.Size = new System.Drawing.Size(0, 15);
             lblQueueColumns.TabIndex = 9;
@@ -281,7 +281,7 @@ namespace PotionApp
             //
             // btnBrew
             //
-            btnBrew.Location = new System.Drawing.Point(892, 235);
+            btnBrew.Location = new System.Drawing.Point(1246, 235);
             btnBrew.Name = "btnBrew";
             btnBrew.Size = new System.Drawing.Size(75, 23);
             btnBrew.Text = "Brew All";
@@ -290,7 +290,7 @@ namespace PotionApp
             //
             // btnClearQueue
             //
-            btnClearQueue.Location = new System.Drawing.Point(973, 235);
+            btnClearQueue.Location = new System.Drawing.Point(1327, 235);
             btnClearQueue.Name = "btnClearQueue";
             btnClearQueue.Size = new System.Drawing.Size(70, 23);
             btnClearQueue.Text = "Clear";
@@ -299,7 +299,7 @@ namespace PotionApp
             //
             // rtbTotals
             //
-            rtbTotals.Location = new System.Drawing.Point(892, 243);
+            rtbTotals.Location = new System.Drawing.Point(1246, 243);
             rtbTotals.Name = "rtbTotals";
             rtbTotals.ReadOnly = true;
             rtbTotals.Size = new System.Drawing.Size(150, 214);
@@ -309,14 +309,14 @@ namespace PotionApp
             // lblWater
             //
             lblWater.AutoSize = true;
-            lblWater.Location = new System.Drawing.Point(1040, 6);
+            lblWater.Location = new System.Drawing.Point(1394, 6);
             lblWater.Name = "lblWater";
             lblWater.Size = new System.Drawing.Size(45, 15);
             lblWater.Text = "Water";
             //
             // barWater
             //
-            barWater.Location = new System.Drawing.Point(1050, 24);
+            barWater.Location = new System.Drawing.Point(1404, 24);
             barWater.Maximum = int.MaxValue;
             barWater.Name = "barWater";
             barWater.Size = new System.Drawing.Size(15, 415);
@@ -325,7 +325,7 @@ namespace PotionApp
             //
             // btnFillWater
             //
-            btnFillWater.Location = new System.Drawing.Point(1066, 82);
+            btnFillWater.Location = new System.Drawing.Point(1420, 82);
             btnFillWater.Name = "btnFillWater";
             btnFillWater.Size = new System.Drawing.Size(92, 23);
             btnFillWater.Text = "Fill";
@@ -334,7 +334,7 @@ namespace PotionApp
             //
             // btnAddWater
             //
-            btnAddWater.Location = new System.Drawing.Point(1066, 53);
+            btnAddWater.Location = new System.Drawing.Point(1420, 53);
             btnAddWater.Name = "btnAddWater";
             btnAddWater.Size = new System.Drawing.Size(92, 23);
             btnAddWater.Text = "Add";
@@ -345,7 +345,7 @@ namespace PotionApp
             //
             listWaterContainers.FormattingEnabled = true;
             listWaterContainers.ItemHeight = 15;
-            listWaterContainers.Location = new System.Drawing.Point(892, 6);
+            listWaterContainers.Location = new System.Drawing.Point(1246, 6);
             listWaterContainers.Name = "listWaterContainers";
             listWaterContainers.Size = new System.Drawing.Size(150, 214);
             //
@@ -359,7 +359,7 @@ namespace PotionApp
             tabInventory.Location = new System.Drawing.Point(4, 24);
             tabInventory.Name = "tabInventory";
             tabInventory.Padding = new System.Windows.Forms.Padding(3);
-            tabInventory.Size = new System.Drawing.Size(1176, 448);
+            tabInventory.Size = new System.Drawing.Size(1529, 582);
             tabInventory.Text = "Inventory";
             tabInventory.UseVisualStyleBackColor = true;
             //
@@ -411,7 +411,7 @@ namespace PotionApp
             tabHelp.Location = new System.Drawing.Point(4, 24);
             tabHelp.Name = "tabHelp";
             tabHelp.Padding = new System.Windows.Forms.Padding(3);
-            tabHelp.Size = new System.Drawing.Size(1176, 448);
+            tabHelp.Size = new System.Drawing.Size(1529, 582);
             tabHelp.Text = "Help";
             tabHelp.UseVisualStyleBackColor = true;
             //
@@ -423,14 +423,14 @@ namespace PotionApp
             txtHelp.Name = "txtHelp";
             txtHelp.ReadOnly = true;
             txtHelp.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            txtHelp.Size = new System.Drawing.Size(1170, 327);
+            txtHelp.Size = new System.Drawing.Size(1523, 425);
             txtHelp.Text = "Controls:\r\n\r\nRecipes tab:\r\n - Add new recipes with the Add button.\r\n - Double-click a recipe to edit it.\r\n - Right-click a recipe to edit, delete, or set its category.\r\n\r\nBrewing tab:\r\n - Double-click a recipe or use the Add button to queue it.\r\n - Double-click a queued item to remove it.\r\n - Brew All consumes ingredients, bottles, and water.\r\n - Use + and - next to each ingredient to change amounts.\r\n - Water containers list shows all storage. Double-click one to fill it or right-click for more options.\r\n - Fill All fills every container.\r\n - Hold Shift for \u00b15, Ctrl for \u00b110, and both for \u00b1100 when adjusting ingredients.\r\n\r\nInventory tab:\r\n - Type a name and count then click Add.\r\n - Double-click an item to consume one.\r\n - Right-click an item to create a recipe, rename it, edit the count, add to queue, or set a category.\r\n - Unknown potions show in orange.";
             //
             // Form1
             //
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(1184, 476);
+            ClientSize = new System.Drawing.Size(1539, 619);
             Controls.Add(tabControl1);
             Name = "Form1";
             Text = "Potion Manager";
