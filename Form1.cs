@@ -20,7 +20,6 @@ namespace PotionApp
         private readonly ContextMenuStrip inventoryMenu = new();
         private readonly ContextMenuStrip recipeMenu = new();
         private readonly ContextMenuStrip brewMenu = new();
-        private ListBox? listWaterContainers;
 
         // Horizontal offset used when laying out controls on the Brewing tab
         // Moved left slightly so controls do not overlap the water UI
@@ -81,7 +80,7 @@ namespace PotionApp
             FormClosing += Form1_FormClosing;
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void btnAdd_Click(object? sender, EventArgs e)
         {
             using var frm = new RecipeForm();
             if (frm.ShowDialog(this) == DialogResult.OK)
@@ -95,7 +94,7 @@ namespace PotionApp
 
         private Recipe? SelectedRecipe => listRecipes.SelectedItem as Recipe;
 
-        private void listRecipes_DoubleClick(object sender, EventArgs e)
+        private void listRecipes_DoubleClick(object? sender, EventArgs e)
         {
             if (SelectedRecipe == null) return;
             using var frm = new RecipeForm(SelectedRecipe);
@@ -107,7 +106,7 @@ namespace PotionApp
             }
         }
 
-        private void btnAddQueue_Click(object sender, EventArgs e)
+        private void btnAddQueue_Click(object? sender, EventArgs e)
         {
             if (listBrewRecipes.SelectedItem is Recipe rec)
             {
@@ -116,12 +115,12 @@ namespace PotionApp
             }
         }
 
-        private void listBrewRecipes_DoubleClick(object sender, EventArgs e)
+        private void listBrewRecipes_DoubleClick(object? sender, EventArgs e)
         {
             btnAddQueue_Click(sender, e);
         }
 
-        private void listQueue_DoubleClick(object sender, EventArgs e)
+        private void listQueue_DoubleClick(object? sender, EventArgs e)
         {
             if (listQueue.SelectedItem is not Recipe rec) return;
             var items = brewQueue.ToList();
@@ -134,7 +133,7 @@ namespace PotionApp
             }
         }
 
-        private void btnBrew_Click(object sender, EventArgs e)
+        private void btnBrew_Click(object? sender, EventArgs e)
         {
             if (brewQueue.Count == 0) return;
             int totalWaterNeeded = brewQueue.Count * 200;
@@ -194,7 +193,7 @@ namespace PotionApp
             return null;
         }
 
-        private void adjustAmount_Click(object sender, EventArgs e)
+        private void adjustAmount_Click(object? sender, EventArgs e)
         {
             if (sender is not Button btn || btn.Tag is not NumericUpDown num) return;
             bool shift = ModifierKeys.HasFlag(Keys.Shift);
@@ -209,14 +208,14 @@ namespace PotionApp
                 num.Value = Math.Max(num.Minimum, num.Value - delta);
         }
 
-        private void btnFillWater_Click(object sender, EventArgs e)
+        private void btnFillWater_Click(object? sender, EventArgs e)
         {
             foreach (var c in waterContainers)
                 c.Amount = c.Capacity;
             RefreshWater();
         }
 
-        private void listInventory_DoubleClick(object sender, EventArgs e)
+        private void listInventory_DoubleClick(object? sender, EventArgs e)
         {
             if (listInventory.SelectedItem is not string item) return;
             var parts = item.Split(':');
@@ -311,7 +310,7 @@ namespace PotionApp
             RefreshWater();
         }
 
-        private void btnInventoryAdd_Click(object sender, EventArgs e)
+        private void btnInventoryAdd_Click(object? sender, EventArgs e)
         {
             var name = txtInventoryName.Text.Trim();
             if (string.IsNullOrEmpty(name)) return;
