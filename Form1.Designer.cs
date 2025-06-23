@@ -40,6 +40,9 @@ namespace PotionApp
         private System.Windows.Forms.Label lblRecipeColumns;
         private System.Windows.Forms.Label lblQueueColumns;
         private System.Windows.Forms.TextBox txtHelp;
+        private System.Windows.Forms.GroupBox grpIngredients;
+        private System.Windows.Forms.GroupBox grpQueue;
+        private System.Windows.Forms.GroupBox grpWater;
 
         protected override void Dispose(bool disposing)
         {
@@ -89,11 +92,17 @@ namespace PotionApp
             lblRecipeColumns = new System.Windows.Forms.Label();
             lblQueueColumns = new System.Windows.Forms.Label();
             rtbTotals = new System.Windows.Forms.RichTextBox();
+            grpIngredients = new System.Windows.Forms.GroupBox();
+            grpQueue = new System.Windows.Forms.GroupBox();
+            grpWater = new System.Windows.Forms.GroupBox();
             tabControl1.SuspendLayout();
             tabRecipes.SuspendLayout();
             tabBrew.SuspendLayout();
             tabInventory.SuspendLayout();
             tabHelp.SuspendLayout();
+            grpIngredients.SuspendLayout();
+            grpQueue.SuspendLayout();
+            grpWater.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(numAnimal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(numBerry)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(numFungi)).BeginInit();
@@ -168,6 +177,9 @@ namespace PotionApp
             //
             // tabBrew
             //
+            tabBrew.Controls.Add(grpWater);
+            tabBrew.Controls.Add(grpQueue);
+            tabBrew.Controls.Add(grpIngredients);
             tabBrew.Controls.Add(listBrewRecipes);
             tabBrew.Controls.Add(cmbBrewFilter);
             tabBrew.Controls.Add(btnAddQueue);
@@ -223,21 +235,45 @@ namespace PotionApp
             btnAddQueue.UseVisualStyleBackColor = true;
             btnAddQueue.Click += btnAddQueue_Click;
             //
+            // grpIngredients
+            //
+            grpIngredients.Location = new System.Drawing.Point(475, 5);
+            grpIngredients.Name = "grpIngredients";
+            grpIngredients.Size = new System.Drawing.Size(398, 223);
+            grpIngredients.TabStop = false;
+            grpIngredients.Text = "Ingredients";
+            //
+            // grpQueue
+            //
+            grpQueue.Location = new System.Drawing.Point(401, 214);
+            grpQueue.Name = "grpQueue";
+            grpQueue.Size = new System.Drawing.Size(490, 228);
+            grpQueue.TabStop = false;
+            grpQueue.Text = "Queue";
+            //
+            // grpWater
+            //
+            grpWater.Location = new System.Drawing.Point(887, 5);
+            grpWater.Name = "grpWater";
+            grpWater.Size = new System.Drawing.Size(283, 437);
+            grpWater.TabStop = false;
+            grpWater.Text = "Water";
+            //
             // listQueue
             // listQueue
             //
             listQueue.FormattingEnabled = true;
             listQueue.ItemHeight = 15;
-            listQueue.Location = new System.Drawing.Point(406, 220);
+            listQueue.Location = new System.Drawing.Point(406, 235);
             listQueue.Name = "listQueue";
-            listQueue.Size = new System.Drawing.Size(480, 243);
+            listQueue.Size = new System.Drawing.Size(480, 208);
             listQueue.Font = new System.Drawing.Font("Consolas", 9F);
             listQueue.DoubleClick += listQueue_DoubleClick;
             //
             // lblQueueColumns
             //
             lblQueueColumns.AutoSize = true;
-            lblQueueColumns.Location = new System.Drawing.Point(406, 201);
+            lblQueueColumns.Location = new System.Drawing.Point(406, 214);
             lblQueueColumns.Name = "lblQueueColumns";
             lblQueueColumns.Size = new System.Drawing.Size(0, 15);
             lblQueueColumns.TabIndex = 9;
@@ -245,7 +281,7 @@ namespace PotionApp
             //
             // btnBrew
             //
-            btnBrew.Location = new System.Drawing.Point(892, 220);
+            btnBrew.Location = new System.Drawing.Point(892, 235);
             btnBrew.Name = "btnBrew";
             btnBrew.Size = new System.Drawing.Size(75, 23);
             btnBrew.Text = "Brew All";
@@ -254,7 +290,7 @@ namespace PotionApp
             //
             // btnClearQueue
             //
-            btnClearQueue.Location = new System.Drawing.Point(973, 220);
+            btnClearQueue.Location = new System.Drawing.Point(973, 235);
             btnClearQueue.Name = "btnClearQueue";
             btnClearQueue.Size = new System.Drawing.Size(70, 23);
             btnClearQueue.Text = "Clear";
@@ -263,7 +299,7 @@ namespace PotionApp
             //
             // rtbTotals
             //
-            rtbTotals.Location = new System.Drawing.Point(892, 228);
+            rtbTotals.Location = new System.Drawing.Point(892, 243);
             rtbTotals.Name = "rtbTotals";
             rtbTotals.ReadOnly = true;
             rtbTotals.Size = new System.Drawing.Size(150, 214);
@@ -401,6 +437,9 @@ namespace PotionApp
             tabControl1.ResumeLayout(false);
             tabRecipes.ResumeLayout(false);
             tabBrew.ResumeLayout(false);
+            grpWater.ResumeLayout(false);
+            grpQueue.ResumeLayout(false);
+            grpIngredients.ResumeLayout(false);
             tabInventory.ResumeLayout(false);
             tabHelp.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(numAnimal)).EndInit();
