@@ -515,7 +515,7 @@ namespace PotionApp
                     Location = new System.Drawing.Point(x, y),
                     AutoSize = true
                 };
-                tabBrew.Controls.Add(lbl);
+                grpIngredients.Controls.Add(lbl);
 
                 Button btnMinus = new Button
                 {
@@ -525,13 +525,13 @@ namespace PotionApp
                     Tag = nums[i]
                 };
                 btnMinus.Click += adjustAmount_Click;
-                tabBrew.Controls.Add(btnMinus);
+                grpIngredients.Controls.Add(btnMinus);
 
                 nums[i].Location = new System.Drawing.Point(x + 24, y + 20);
                 nums[i].Maximum = decimal.MaxValue;
                 nums[i].Size = new System.Drawing.Size(60, 23);
                 nums[i].ValueChanged += (s, e) => RefreshTotals();
-                tabBrew.Controls.Add(nums[i]);
+                grpIngredients.Controls.Add(nums[i]);
 
                 Button btnPlus = new Button
                 {
@@ -541,7 +541,7 @@ namespace PotionApp
                     Tag = nums[i]
                 };
                 btnPlus.Click += adjustAmount_Click;
-                tabBrew.Controls.Add(btnPlus);
+                grpIngredients.Controls.Add(btnPlus);
             }
         }
 
