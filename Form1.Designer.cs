@@ -228,7 +228,7 @@ namespace PotionApp
             //
             listQueue.FormattingEnabled = true;
             listQueue.ItemHeight = 15;
-            listQueue.Location = new System.Drawing.Point(406, 199);
+            listQueue.Location = new System.Drawing.Point(406, 220);
             listQueue.Name = "listQueue";
             listQueue.Size = new System.Drawing.Size(480, 243);
             listQueue.Font = new System.Drawing.Font("Consolas", 9F);
@@ -237,7 +237,7 @@ namespace PotionApp
             // lblQueueColumns
             //
             lblQueueColumns.AutoSize = true;
-            lblQueueColumns.Location = new System.Drawing.Point(406, 180);
+            lblQueueColumns.Location = new System.Drawing.Point(406, 201);
             lblQueueColumns.Name = "lblQueueColumns";
             lblQueueColumns.Size = new System.Drawing.Size(0, 15);
             lblQueueColumns.TabIndex = 9;
@@ -245,7 +245,7 @@ namespace PotionApp
             //
             // btnBrew
             //
-            btnBrew.Location = new System.Drawing.Point(892, 199);
+            btnBrew.Location = new System.Drawing.Point(892, 220);
             btnBrew.Name = "btnBrew";
             btnBrew.Size = new System.Drawing.Size(75, 23);
             btnBrew.Text = "Brew All";
@@ -254,7 +254,7 @@ namespace PotionApp
             //
             // btnClearQueue
             //
-            btnClearQueue.Location = new System.Drawing.Point(973, 199);
+            btnClearQueue.Location = new System.Drawing.Point(973, 220);
             btnClearQueue.Name = "btnClearQueue";
             btnClearQueue.Size = new System.Drawing.Size(70, 23);
             btnClearQueue.Text = "Clear";

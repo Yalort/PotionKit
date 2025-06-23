@@ -23,7 +23,7 @@ namespace PotionApp
 
         // Horizontal offset used when laying out controls on the Brewing tab
         // Moved left slightly so controls do not overlap the water UI
-        private const int BrewOffsetX = 500;
+        private const int BrewOffsetX = 480;
 
         private readonly List<WaterContainer> waterContainers = new();
         private readonly ContextMenuStrip waterMenu = new();
@@ -504,15 +504,10 @@ namespace PotionApp
             string[] labels = ingredientNames;
             for (int i = 0; i < nums.Length; i++)
             {
-                int row = i / 4;
-                int col = i % 4;
+                int row = i / 3;
+                int col = i % 3;
                 int x = BrewOffsetX + 6 + col * 140;
                 int y = 6 + row * 80;
-                if (i == nums.Length - 1)
-                {
-                    x = BrewOffsetX + 6 + 3 * 140;
-                    y -= 20;
-                }
 
                 Label lbl = new Label
                 {
