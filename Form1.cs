@@ -21,9 +21,9 @@ namespace PotionApp
         private readonly ContextMenuStrip recipeMenu = new();
         private readonly ContextMenuStrip brewMenu = new();
 
-        // Horizontal offset used when laying out controls on the Brewing tab
-        // Moved left slightly so controls do not overlap the water UI
-        private const int BrewOffsetX = 480;
+        // Horizontal offset used when laying out controls on the Brewing tab.
+        // The water UI is now inside its own group box so no offset is needed.
+        private const int BrewOffsetX = 0;
 
         private readonly List<WaterContainer> waterContainers = new();
         private readonly ContextMenuStrip waterMenu = new();
