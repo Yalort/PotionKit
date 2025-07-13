@@ -267,7 +267,7 @@ namespace PotionApp
             //
             listQueue.FormattingEnabled = true;
             listQueue.ItemHeight = 15;
-            listQueue.Location = new System.Drawing.Point(416, 256);
+            listQueue.Location = new System.Drawing.Point(5, 20);
             listQueue.Name = "listQueue";
             listQueue.Size = new System.Drawing.Size(480, 208);
             listQueue.Font = new System.Drawing.Font("Consolas", 9F);
@@ -276,7 +276,7 @@ namespace PotionApp
             // lblQueueColumns
             //
             lblQueueColumns.AutoSize = true;
-            lblQueueColumns.Location = new System.Drawing.Point(416, 240);
+            lblQueueColumns.Location = new System.Drawing.Point(5, 5);
             lblQueueColumns.Name = "lblQueueColumns";
             lblQueueColumns.Size = new System.Drawing.Size(0, 15);
             lblQueueColumns.TabIndex = 9;
@@ -284,7 +284,7 @@ namespace PotionApp
             //
             // btnBrew
             //
-            btnBrew.Location = new System.Drawing.Point(1246, 235);
+            btnBrew.Location = new System.Drawing.Point(330, 0);
             btnBrew.Name = "btnBrew";
             btnBrew.Size = new System.Drawing.Size(75, 23);
             btnBrew.Text = "Brew All";
@@ -293,7 +293,7 @@ namespace PotionApp
             //
             // btnClearQueue
             //
-            btnClearQueue.Location = new System.Drawing.Point(1327, 235);
+            btnClearQueue.Location = new System.Drawing.Point(405, 0);
             btnClearQueue.Name = "btnClearQueue";
             btnClearQueue.Size = new System.Drawing.Size(70, 23);
             btnClearQueue.Text = "Clear";
@@ -302,7 +302,7 @@ namespace PotionApp
             //
             // rtbTotals
             //
-            rtbTotals.Location = new System.Drawing.Point(1246, 243);
+            rtbTotals.Location = new System.Drawing.Point(330, 8);
             rtbTotals.Name = "rtbTotals";
             rtbTotals.ReadOnly = true;
             rtbTotals.Size = new System.Drawing.Size(150, 214);
